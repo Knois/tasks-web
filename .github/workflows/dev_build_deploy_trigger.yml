@@ -25,7 +25,7 @@ jobs:
       - name: Publish to Github Packages Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: knois/landing-about-projects-web/dev
+          name: knois/tasks-web/dev
           registry: docker.pkg.github.com
           username: Knois
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repo: init-repo
           owner: l423r
-          event_type: dev-landing-about-projects-web-deploy
+          event_type: dev-tasks-web-deploy
   finish:
     needs: trigger_to_deploy_docker_img
     name: Send notification for finish
