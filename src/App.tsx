@@ -114,6 +114,7 @@ function App() {
 
       <button
         title={mode === "register" ? "Войти" : "Регистрация"}
+        type="submit"
         onClick={() => changeMode()}
       />
     </div>
