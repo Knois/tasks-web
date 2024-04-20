@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 
-
 import { endpoints } from "../api/endpoints";
 import { IUser } from "../types/User";
 import { getTokenFromStore } from "../utils";
@@ -35,7 +34,7 @@ const userStore = () => {
             await this.createUser();
           } else {
             const error = await response.text();
-            alert( error);
+            alert(error);
           }
         } catch {
           alert("Ошибка при получении профиля");
@@ -59,10 +58,10 @@ const userStore = () => {
             this.saveUser(result);
           } else {
             const error = await response.text();
-          alert(error);
+            alert(error);
           }
         } catch {
-         alert( "Ошибка при создании профиля");
+          alert("Ошибка при создании профиля");
         }
       },
     },

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 
-
 import { endpoints } from "../api/endpoints";
 import { IGroup } from "../types/Group";
 import { getTokenFromStore } from "../utils";
@@ -31,10 +30,10 @@ const groupsStore = () => {
             this.setGroups(result);
           } else {
             const error = await response.text();
-            alert( error);
+            alert(error);
           }
         } catch {
-          alert( "Ошибка при получении групп");
+          alert("Ошибка при получении групп");
         }
       },
 
@@ -60,10 +59,10 @@ const groupsStore = () => {
             }
           } else {
             const error = await response.text();
-            alert( error);
+            alert(error);
           }
         } catch {
-          alert( "Ошибка при создании группы");
+          alert("Ошибка при создании группы");
         }
       },
 
@@ -94,9 +93,9 @@ const groupsStore = () => {
             }
           } else {
             const error = await response.text();
-            alert( error);
+            alert(error);
           }
-        } catch { 
+        } catch {
           alert("Ошибка при создании группы");
         }
       },

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 
-
 import { endpoints } from "../api/endpoints";
 import { ITask, ITasksCollection } from "../types/Task";
 import { getTokenFromStore } from "../utils";
@@ -34,10 +33,10 @@ const tasksStore = () => {
             this.saveTasks(id, result);
           } else {
             const error = await response.text();
-            alert( error);
+            alert(error);
           }
         } catch {
-          alert( `Ошибка при получении задач, id группы ${id}`);
+          alert(`Ошибка при получении задач, id группы ${id}`);
         }
       },
     },
