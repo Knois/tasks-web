@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { Alert } from "react-native";
+
 
 import { endpoints } from "../api/endpoints";
 import { IUser } from "../types/User";
@@ -35,10 +35,10 @@ const userStore = () => {
             await this.createUser();
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+            alert( error);
           }
         } catch {
-          Alert.alert("Ошибка", "Ошибка при получении профиля");
+          alert("Ошибка при получении профиля");
         }
       },
 
@@ -59,10 +59,10 @@ const userStore = () => {
             this.saveUser(result);
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+          alert(error);
           }
         } catch {
-          Alert.alert("Ошибка", "Ошибка при создании профиля");
+         alert( "Ошибка при создании профиля");
         }
       },
     },

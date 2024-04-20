@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { Alert } from "react-native";
+
 
 import { endpoints } from "../api/endpoints";
 import { ITask, ITasksCollection } from "../types/Task";
@@ -34,10 +34,10 @@ const tasksStore = () => {
             this.saveTasks(id, result);
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+            alert( error);
           }
         } catch {
-          Alert.alert("Ошибка", `Ошибка при получении задач, id группы ${id}`);
+          alert( `Ошибка при получении задач, id группы ${id}`);
         }
       },
     },

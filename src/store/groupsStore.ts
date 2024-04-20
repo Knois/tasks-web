@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { Alert } from "react-native";
+
 
 import { endpoints } from "../api/endpoints";
 import { IGroup } from "../types/Group";
@@ -31,10 +31,10 @@ const groupsStore = () => {
             this.setGroups(result);
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+            alert( error);
           }
         } catch {
-          Alert.alert("Ошибка", "Ошибка при получении групп");
+          alert( "Ошибка при получении групп");
         }
       },
 
@@ -60,10 +60,10 @@ const groupsStore = () => {
             }
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+            alert( error);
           }
         } catch {
-          Alert.alert("Ошибка", "Ошибка при создании группы");
+          alert( "Ошибка при создании группы");
         }
       },
 
@@ -94,10 +94,10 @@ const groupsStore = () => {
             }
           } else {
             const error = await response.text();
-            Alert.alert("Ошибка", error);
+            alert( error);
           }
-        } catch {
-          Alert.alert("Ошибка", "Ошибка при создании группы");
+        } catch { 
+          alert("Ошибка при создании группы");
         }
       },
     },
