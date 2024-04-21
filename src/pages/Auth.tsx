@@ -1,10 +1,10 @@
 import { endpoints } from "api/endpoints";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import { useState } from "react";
 import { setEmailToStore, setPasswordToStore, setTokenToStore } from "utils";
 
-function App() {
+const Auth = () => {
   const { userStore } = useStore();
 
   const [name, setName] = useState<string>("");
@@ -119,6 +119,6 @@ function App() {
       />
     </div>
   );
-}
+};
 
-export default observer(App);
+export default observer(Auth);

@@ -1,9 +1,9 @@
-import groupsStore from "./groupsStore";
-import tasksStore from "./tasksStore";
-import userStore from "./userStore";
+import groups from "./groups";
+import tasks from "./tasks";
+import user from "./user";
 
 export const stores = {
-  userStore: userStore(),
-  groupsStore: groupsStore(),
-  tasksStore: tasksStore(),
+  userStore: user(),
+  groupsStore: groups(),
+  tasksStore: tasks(),
 };

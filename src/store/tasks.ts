@@ -4,7 +4,7 @@ import { endpoints } from "../api/endpoints";
 import { ITask, ITasksCollection } from "../types/Task";
 import { getTokenFromStore } from "../utils";
 
-const tasksStore = () => {
+const tasks = () => {
   return makeAutoObservable(
     {
       tasks: {} as ITasksCollection,
@@ -44,4 +44,4 @@ const tasksStore = () => {
   );
 };
 
-export default tasksStore;
+export default tasks;

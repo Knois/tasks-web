@@ -4,7 +4,7 @@ import { endpoints } from "../api/endpoints";
 import { IGroup } from "../types/Group";
 import { getTokenFromStore } from "../utils";
 
-const groupsStore = () => {
+const groups = () => {
   return makeAutoObservable(
     {
       groups: [] as IGroup[],
@@ -104,4 +104,4 @@ const groupsStore = () => {
   );
 };
 
-export default groupsStore;
+export default groups;

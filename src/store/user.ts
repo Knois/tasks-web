@@ -4,11 +4,16 @@ import { endpoints } from "../api/endpoints";
 import { IUser } from "../types/User";
 import { getTokenFromStore } from "../utils";
 
-const userStore = () => {
+const user = () => {
   return makeAutoObservable(
     {
       email: "" as string,
       name: "" as string,
+      isAuth: false as boolean,
+
+      setIsAuth(bool: boolean) {
+        this.isAuth = bool;
+      },
 
       saveUser(user: IUser) {
         this.email = user.email;
@@ -69,4 +74,4 @@ const userStore = () => {
   );
 };
 
-export default userStore;
+export default user;
