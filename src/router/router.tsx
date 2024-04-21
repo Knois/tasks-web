@@ -4,15 +4,15 @@ import { observer } from "mobx-react-lite";
 import Auth from "pages/Auth";
 import ErrorPage from "pages/ErrorPage";
 import Home from "pages/Home";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const Router = () => {
   const { userStore } = useStore();
-
   const [isLoading, setIsLoading] = useState(true);
 
-  useLayoutEffect(() => {
+  //сначала проверяем токен
+  useEffect(() => {
     const checkAuth = async () => {
       await userStore.getUser();
       setIsLoading(false);
@@ -25,17 +25,15 @@ const Router = () => {
     return <Loading />;
   }
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: "/",
-        element: userStore.isAuth ? <Home /> : <Auth />,
-        errorElement: <ErrorPage />,
-      },
-      // Добавьте другие маршруты с защитой аутентификации здесь
-    ],
-    { basename: "/gateway/tasks" },
-  );
+  const routes = [
+    {
+      path: "/",
+      element: userStore.isAuth ? <Home /> : <Auth />,
+      errorElement: <ErrorPage />,
+    },
+  ];
+
+  const router = createBrowserRouter(routes, { basename: "/gateway/tasks" });
 
   return <RouterProvider router={router} />;
 };
