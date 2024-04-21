@@ -1,5 +1,8 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { IGroup } from "types/Group";
 import { IAuthLoginResponse, IAuthRegisterResponse } from "types/IAuthResponse";
+import { ISpace } from "types/Space";
+import { ITask } from "types/Task";
 import { IUser } from "types/User";
 
 import appInstance from "./appInstance";
@@ -100,6 +103,42 @@ const API = {
       method: "put",
       url: endpoints.app.user,
       data: { name },
+    });
+    if (!response) {
+      throw new Error("Updating user failed without a server response.");
+    }
+    return response;
+  },
+
+  getSpaces: async (): Promise<AxiosResponse<ISpace[]>> => {
+    const response = await sendRequest<ISpace[]>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.space,
+    });
+    if (!response) {
+      throw new Error("Updating user failed without a server response.");
+    }
+    return response;
+  },
+
+  getGroupsById: async (id: string): Promise<AxiosResponse<IGroup>> => {
+    const response = await sendRequest<IGroup>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.group + `/${id}`,
+    });
+    if (!response) {
+      throw new Error("Updating user failed without a server response.");
+    }
+    return response;
+  },
+
+  getTasksByGroupId: async (id: string): Promise<AxiosResponse<ITask[]>> => {
+    const response = await sendRequest<ITask[]>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.task + `/userGroup/${id}`,
     });
     if (!response) {
       throw new Error("Updating user failed without a server response.");
