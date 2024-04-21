@@ -1,8 +1,8 @@
-import { endpoints } from "api/endpoints";
+import API from "api/api";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { setEmailToStore, setPasswordToStore, setTokenToStore } from "utils";
+import { setTokenToStore } from "utils";
 
 const Auth = () => {
   const { userStore } = useStore();
@@ -14,40 +14,20 @@ const Auth = () => {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const changeMode = () => {
-    if (mode === "register") {
-      setMode("login");
-    } else {
-      setMode("register");
-    }
-  };
+  const toggleMode = () =>
+    setMode((prevMode) => (prevMode === "login" ? "register" : "login"));
 
-  const getJwt = async () => {
+  const processLogin = async () => {
     setIsLoading(true);
 
-    const user = { email, password };
-
     try {
-      const response = await fetch(endpoints.auth.jwt, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        setTokenToStore(result.jwt_token);
-        setEmailToStore(email);
-        setPasswordToStore(password);
-        userStore.getUser();
-      } else {
-        const error = await response.text();
-        alert(error);
-      }
-    } catch {
-      alert("Ошибка при получении токена");
+      const {
+        data: { jwt_token },
+      } = await API.login({ email, password });
+      setTokenToStore(jwt_token);
+      userStore.setIsAuth(true);
+    } catch (error) {
+      console.warn(error);
     } finally {
       setIsLoading(false);
     }
@@ -56,67 +36,76 @@ const Auth = () => {
   const processRegister = async () => {
     setIsLoading(true);
 
-    const user = { name, email, password };
-
-    try {
-      const response = await fetch(endpoints.auth.user, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        await getJwt();
-      } else {
-        const error = await response.text();
-        alert(error);
-      }
-    } catch {
-      alert("Ошибка при попытке зарегистрироваться");
-    } finally {
-      setIsLoading(false);
-    }
+    await API.register({ name, email, password })
+      .then(async () => {
+        await processLogin();
+      })
+      .catch((error) => console.warn(error))
+      .finally(() => setIsLoading(false));
   };
 
-  const buttonAction = () => {
+  const onSubmit = () => {
     if (mode === "register") {
       processRegister();
     } else {
-      getJwt();
+      processLogin();
     }
   };
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="auth">
+        <h1 className="form__label">Loading...</h1>
+      </div>
+    );
   }
 
   return (
-    <div>
-      {mode === "register" && (
-        <input onChange={(e) => setName(e.target.value)} value={name} />
-      )}
+    <div className="auth">
+      <form onSubmit={onSubmit} className="form">
+        {mode === "register" && (
+          <div className="form__box">
+            <label className="form__label">Username</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="form__input"
+            />
+          </div>
+        )}
 
-      <input onChange={(e) => setEmail(e.target.value)} value={email} />
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <button
-        title={mode === "register" ? "Зарегистрироваться" : "Войти"}
-        type="submit"
-        onClick={() => buttonAction()}
-      >
-        Login
+        <div className="form__box">
+          <label className="form__label">Email</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="form__input"
+          />
+        </div>
+
+        <div className="form__box">
+          <label className="form__label">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="form__input"
+          />
+        </div>
+
+        <button type="submit" className="form__button">
+          GO
+        </button>
+      </form>
+
+      <button onClick={toggleMode} className="form__button form__button-link">
+        {mode === "login" ? "Sign up" : "Sign in"}
       </button>
-
-      <button
-        title={mode === "register" ? "Войти" : "Регистрация"}
-        type="submit"
-        onClick={() => changeMode()}
-      />
     </div>
   );
 };

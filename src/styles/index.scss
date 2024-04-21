@@ -1,1 +1,79 @@
 @import-normalize;
+
+$color-white: #edf5e1;
+$color-bright: #8ee4af;
+$color-green: #5cdb95;
+$color-dark: #379683;
+$color-black: #05386b;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: $color-green;
+}
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  &__label {
+    color: $color-white;
+    font-size: 30px;
+  }
+
+  &__input {
+    background-color: $color-bright;
+    border: 0;
+    height: 30px;
+    outline: none;
+    padding: 10px;
+    width: 300px;
+    border-radius: 10px;
+  }
+
+  &__button {
+    background-color: $color-white;
+    border: 0;
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    color: $color-black;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: $color-black solid 2px;
+    }
+
+    &-link {
+      background-color: initial;
+      width: min-content;
+      text-wrap: nowrap;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: $color-white solid 2px;
+      }
+    }
+  }
+}
