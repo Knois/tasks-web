@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
 import { IAuthLoginResponse, IAuthRegisterResponse } from "types/IAuthResponse";
+import { IUser } from "types/User";
 
+import appInstance from "./appInstance";
 import authInstance from "./authInstance";
 import { endpoints } from "./endpoints";
 
@@ -43,9 +45,37 @@ const login = async (user: {
   }
 };
 
+const getUser = async (): Promise<AxiosResponse<IUser>> => {
+  console.log("trying to get user profile");
+
+  try {
+    const response = await appInstance.get<IUser>(endpoints.app.user);
+    return response;
+  } catch (error: any) {
+    console.log("error.response.data", error.response.data);
+    console.log("error.message", error.message);
+    throw new Error(error.response.data);
+  }
+};
+
+const createUser = async (): Promise<AxiosResponse<IUser>> => {
+  console.log("trying to create user profile");
+
+  try {
+    const response = await appInstance.post<IUser>(endpoints.app.user);
+    return response;
+  } catch (error: any) {
+    console.log("error.response.data", error.response.data);
+    console.log("error.message", error.message);
+    throw new Error(error.response.data);
+  }
+};
+
 const API = {
   register,
   login,
+  getUser,
+  createUser,
 };
 
 export default API;

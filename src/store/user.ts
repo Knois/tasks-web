@@ -1,8 +1,7 @@
+import API from "api/api";
 import { makeAutoObservable } from "mobx";
 
-import { endpoints } from "../api/endpoints";
 import { IUser } from "../types/User";
-import { getTokenFromStore } from "../utils";
 
 const user = () => {
   return makeAutoObservable(
@@ -21,52 +20,23 @@ const user = () => {
       },
 
       async getUser() {
-        const token = await getTokenFromStore();
-
         try {
-          const response = await fetch(endpoints.app.user, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            this.saveUser(result);
-          } else if (response.status === 404) {
-            await this.createUser();
-          } else {
-            const error = await response.text();
-            alert(error);
-          }
-        } catch {
-          alert("Ошибка при получении профиля");
+          const { data } = await API.getUser();
+          this.saveUser(data);
+          this.setIsAuth(true);
+        } catch (error) {
+          console.log(error);
+          await this.createUser();
         }
       },
 
       async createUser() {
-        const token = await getTokenFromStore();
-
         try {
-          const response = await fetch(endpoints.app.user, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            this.saveUser(result);
-          } else {
-            const error = await response.text();
-            alert(error);
-          }
-        } catch {
-          alert("Ошибка при создании профиля");
+          const { data } = await API.createUser();
+          this.saveUser(data);
+          this.setIsAuth(true);
+        } catch (error) {
+          console.log(error);
         }
       },
     },

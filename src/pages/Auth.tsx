@@ -1,4 +1,5 @@
 import API from "api/api";
+import Loading from "components/Loading";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
@@ -25,9 +26,9 @@ const Auth = () => {
         data: { jwt_token },
       } = await API.login({ email, password });
       setTokenToStore(jwt_token);
-      userStore.setIsAuth(true);
+      await userStore.getUser();
     } catch (error) {
-      console.warn(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -40,8 +41,10 @@ const Auth = () => {
       .then(async () => {
         await processLogin();
       })
-      .catch((error) => console.warn(error))
-      .finally(() => setIsLoading(false));
+      .catch((error) => {
+        console.warn(error);
+        setIsLoading(false);
+      });
   };
 
   const onSubmit = () => {
@@ -55,7 +58,7 @@ const Auth = () => {
   if (isLoading) {
     return (
       <div className="auth">
-        <h1 className="form__label">Loading...</h1>
+        <Loading />
       </div>
     );
   }
