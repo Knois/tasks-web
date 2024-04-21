@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { IAuthLoginResponse, IAuthRegisterResponse } from "types/IAuthResponse";
 import { IUser } from "types/User";
 
@@ -6,76 +6,106 @@ import appInstance from "./appInstance";
 import authInstance from "./authInstance";
 import { endpoints } from "./endpoints";
 
-const register = async (user: {
-  name: string;
-  email: string;
-  password: string;
-}): Promise<AxiosResponse<IAuthRegisterResponse>> => {
-  console.log("trying to register user");
+interface RequestParams {
+  instance: AxiosInstance;
+  method: "get" | "post" | "put" | "delete";
+  url: string;
+  data?: any;
+}
 
-  try {
-    const response = await authInstance.post<IAuthRegisterResponse>(
-      endpoints.auth.user,
-      user,
-    );
-    return response;
-  } catch (error: any) {
-    console.log("error.response.data", error.response.data);
-    console.log("error.message", error.message);
-    throw new Error(error.response.data);
-  }
+const handleError = (error: any) => {
+  console.error("Error:", error.response?.data || error.message);
+  throw new Error(error.response?.data || error.message);
 };
 
-const login = async (user: {
-  email: string;
-  password: string;
-}): Promise<AxiosResponse<IAuthLoginResponse>> => {
-  console.log("trying to get jwt");
-
+const sendRequest = async <T>({
+  instance,
+  method,
+  url,
+  data,
+}: RequestParams): Promise<AxiosResponse<T> | undefined> => {
   try {
-    const response = await authInstance.post<IAuthLoginResponse>(
-      endpoints.auth.jwt,
-      user,
-    );
-    return response;
-  } catch (error: any) {
-    console.log("error.response.data", error.response.data);
-    console.log("error.message", error.message);
-    throw new Error(error.response.data);
-  }
-};
-
-const getUser = async (): Promise<AxiosResponse<IUser>> => {
-  console.log("trying to get user profile");
-
-  try {
-    const response = await appInstance.get<IUser>(endpoints.app.user);
-    return response;
-  } catch (error: any) {
-    console.log("error.response.data", error.response.data);
-    console.log("error.message", error.message);
-    throw new Error(error.response.data);
-  }
-};
-
-const createUser = async (): Promise<AxiosResponse<IUser>> => {
-  console.log("trying to create user profile");
-
-  try {
-    const response = await appInstance.post<IUser>(endpoints.app.user);
-    return response;
-  } catch (error: any) {
-    console.log("error.response.data", error.response.data);
-    console.log("error.message", error.message);
-    throw new Error(error.response.data);
+    if (method === "get" || method === "delete") {
+      return await instance[method]<T>(url);
+    } else {
+      return await instance[method]<T>(url, data);
+    }
+  } catch (error) {
+    handleError(error as AxiosError);
+    return undefined; // TypeScript не требует этой строки для выполнения кода, но она делает намерения ясными.
   }
 };
 
 const API = {
-  register,
-  login,
-  getUser,
-  createUser,
+  register: async (user: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<AxiosResponse<IAuthRegisterResponse>> => {
+    const response = await sendRequest<IAuthRegisterResponse>({
+      instance: authInstance,
+      method: "post",
+      url: endpoints.auth.user,
+      data: user,
+    });
+    if (!response) {
+      throw new Error("Registration failed without a server response.");
+    }
+    return response;
+  },
+
+  login: async (user: {
+    email: string;
+    password: string;
+  }): Promise<AxiosResponse<IAuthLoginResponse>> => {
+    const response = await sendRequest<IAuthLoginResponse>({
+      instance: authInstance,
+      method: "post",
+      url: endpoints.auth.jwt,
+      data: user,
+    });
+    if (!response) {
+      throw new Error("Login failed without a server response.");
+    }
+    return response;
+  },
+
+  getUser: async (): Promise<AxiosResponse<IUser>> => {
+    const response = await sendRequest<IUser>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.user,
+    });
+    if (!response) {
+      throw new Error("Fetching user failed without a server response.");
+    }
+    return response;
+  },
+
+  createUser: async (): Promise<AxiosResponse<IUser>> => {
+    const response = await sendRequest<IUser>({
+      instance: appInstance,
+      method: "post",
+      url: endpoints.app.user,
+    });
+    if (!response) {
+      throw new Error("Creating user failed without a server response.");
+    }
+    return response;
+  },
+
+  updateUser: async (name: string): Promise<AxiosResponse<IUser>> => {
+    const response = await sendRequest<IUser>({
+      instance: appInstance,
+      method: "put",
+      url: endpoints.app.user,
+      data: { name },
+    });
+    if (!response) {
+      throw new Error("Updating user failed without a server response.");
+    }
+    return response;
+  },
 };
 
 export default API;

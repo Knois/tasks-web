@@ -47,12 +47,9 @@ const Auth = () => {
       });
   };
 
-  const onSubmit = () => {
-    if (mode === "register") {
-      processRegister();
-    } else {
-      processLogin();
-    }
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    mode === "register" ? await processRegister() : await processLogin();
   };
 
   if (isLoading) {
@@ -106,7 +103,11 @@ const Auth = () => {
         </button>
       </form>
 
-      <button onClick={toggleMode} className="form__button form__button-link">
+      <button
+        onClick={toggleMode}
+        className="form__button form__button-link"
+        type="button"
+      >
         {mode === "login" ? "Sign up" : "Sign in"}
       </button>
     </div>
