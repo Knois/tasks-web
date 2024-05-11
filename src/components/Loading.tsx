@@ -1,3 +1,3 @@
-const Loading = () => <h1 className="form__label">Loading...</h1>;
+const Loading = () => <div className="loader" />;
 
 export default Loading;

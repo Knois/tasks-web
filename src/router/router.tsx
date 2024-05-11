@@ -22,7 +22,18 @@ const Router = () => {
   }, [userStore]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Loading />
+      </div>
+    );
   }
 
   const routes = [
