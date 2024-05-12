@@ -1,7 +1,7 @@
 import API from "api/api";
 import { makeAutoObservable } from "mobx";
-
-import { IUser } from "../types/User";
+import { ISpace } from "types/Space";
+import { IUser } from "types/User";
 
 const user = () => {
   return makeAutoObservable(
@@ -9,6 +9,7 @@ const user = () => {
       email: "" as string,
       name: "" as string,
       isAuth: false as boolean,
+      spaces: [] as ISpace[],
 
       setIsAuth(bool: boolean) {
         this.isAuth = bool;
@@ -35,6 +36,15 @@ const user = () => {
           const { data } = await API.createUser();
           this.saveUser(data);
           this.setIsAuth(true);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      async getSpaces() {
+        try {
+          const { data } = await API.getSpaces();
+          this.spaces = data;
         } catch (error) {
           console.log(error);
         }

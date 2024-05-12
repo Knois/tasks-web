@@ -1,17 +1,15 @@
 @import-normalize;
 
-$color-white: #edf5e1;
-$color-white-opacity: #edf5e12a;
-$color-bright: #8ee4af;
-$color-green: #5cdb95;
-$color-dark: #379683;
-$color-black: #05386b;
+@import "./variables.scss";
+@import "./select.scss";
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
+  text-decoration: none;
+  outline: none;
 }
 
 body {
@@ -43,68 +41,13 @@ header {
   animation: spin 1s linear infinite;
 }
 
-.select {
-  position: relative;
-
-  &__root {
-    padding: 10px 15px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    color: $color-white;
-
-    user-select: none;
-
-    &:hover {
-      background-color: $color-white-opacity;
-    }
-
-    &-open {
-      background-color: $color-white-opacity;
-    }
-  }
-
-  &__dropdown {
-    min-width: 100%;
-    max-width: 300px;
-    padding: 10px 0;
-    position: absolute;
-    background: $color-white;
-    top: calc(100% + 10px);
-    left: 0;
-    border-radius: 10px;
-    -webkit-box-shadow: 0px 0px 28px 0px rgba(0, 0, 0, 0.45);
-    -moz-box-shadow: 0px 0px 28px 0px rgba(0, 0, 0, 0.45);
-    box-shadow: 0px 0px 28px 0px rgba(0, 0, 0, 0.45);
-    color: $color-black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
-    &__item {
-      cursor: pointer;
-      min-width: 100%;
-      padding: 10px 15px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &:hover {
-        background-color: $color-dark;
-        color: $color-white;
-      }
-    }
-  }
-}
-
 .auth {
   display: flex;
   flex-direction: column;
   gap: 15px;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .form {
@@ -118,11 +61,19 @@ header {
     flex-direction: column;
     gap: 15px;
     align-items: center;
+
+    &-small {
+      gap: 5px;
+    }
   }
 
   &__label {
     color: $color-white;
     font-size: 30px;
+
+    &-small {
+      font-size: 20px;
+    }
   }
 
   &__input {
@@ -133,6 +84,10 @@ header {
     padding: 10px;
     width: 300px;
     border-radius: 10px;
+
+    &-long {
+      width: 410px;
+    }
   }
 
   &__button {
@@ -148,6 +103,10 @@ header {
       outline: $color-black solid 2px;
     }
 
+    &-small {
+      width: 100px;
+    }
+
     &-link {
       background-color: initial;
       width: min-content;
@@ -159,6 +118,20 @@ header {
       }
     }
   }
+
+  &__item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 5px 0;
+
+    &__label {
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .add-space {
@@ -166,10 +139,20 @@ header {
   background: $color-black;
   border-radius: 10px;
   text-align: center;
-  width: min-content;
-  padding: 5px 10px;
+  width: 150px;
+  padding: 10px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+.create-space {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 @keyframes spin {

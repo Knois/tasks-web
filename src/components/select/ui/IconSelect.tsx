@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = { isOpen: boolean };
 
-const IconSelect = ({ isOpen }: Props) => {
+const IconSelect: React.FC<Props> = ({ isOpen }) => {
   return (
     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none">
       <path

@@ -1,11 +1,7 @@
-import SelectSpaces from "components/SelectSpaces";
+import Header from "components/shared/Header";
 
 const Home = () => {
-  return (
-    <header>
-      <SelectSpaces />
-    </header>
-  );
+  return <Header />;
 };
 
 export default Home;

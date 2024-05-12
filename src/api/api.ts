@@ -117,7 +117,24 @@ const API = {
       url: endpoints.app.space,
     });
     if (!response) {
-      throw new Error("Updating user failed without a server response.");
+      throw new Error("Getting spaces failed without a server response.");
+    }
+    return response;
+  },
+
+  createSpace: async (space: {
+    name: string;
+    description: string;
+    memberEmails: string[];
+  }): Promise<AxiosResponse<ISpace>> => {
+    const response = await sendRequest<ISpace>({
+      instance: appInstance,
+      method: "post",
+      url: endpoints.app.space,
+      data: space,
+    });
+    if (!response) {
+      throw new Error("Creating space failed without a server response.");
     }
     return response;
   },
@@ -129,7 +146,7 @@ const API = {
       url: endpoints.app.group + `/${id}`,
     });
     if (!response) {
-      throw new Error("Updating user failed without a server response.");
+      throw new Error("Getting groups failed without a server response.");
     }
     return response;
   },
@@ -141,7 +158,7 @@ const API = {
       url: endpoints.app.task + `/userGroup/${id}`,
     });
     if (!response) {
-      throw new Error("Updating user failed without a server response.");
+      throw new Error("Getting tasks failed without a server response.");
     }
     return response;
   },

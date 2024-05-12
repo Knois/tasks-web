@@ -1,5 +1,5 @@
 import API from "api/api";
-import Loading from "components/Loading";
+import Loading from "components/shared/Loading";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
@@ -42,9 +42,9 @@ const Auth = () => {
         await processLogin();
       })
       .catch((error) => {
-        console.warn(error);
-        setIsLoading(false);
-      });
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +72,7 @@ const Auth = () => {
               onChange={(e) => setName(e.target.value)}
               required
               className="form__input"
+              autoComplete="name"
             />
           </div>
         )}
@@ -84,6 +85,7 @@ const Auth = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="form__input"
+            autoComplete="email"
           />
         </div>
 

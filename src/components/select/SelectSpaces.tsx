@@ -1,17 +1,18 @@
-import API from "api/api";
+import Loading from "components/shared/Loading";
 import { useClickOutside } from "hooks/useClickOutside";
+import { useStore } from "hooks/useStore";
+import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useRef, useState } from "react";
-import { ISpace } from "types/Space";
+import { Link } from "react-router-dom";
 
-import IconSelect from "./IconSelect";
-import Loading from "./Loading";
+import IconSelect from "./ui/IconSelect";
 
 const SelectSpaces = () => {
+  const { userStore } = useStore();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const [spaces, setSpaces] = useState<ISpace[]>([]);
 
   const handleClick = () => setIsOpen((s) => !s);
 
@@ -26,16 +27,13 @@ const SelectSpaces = () => {
     const getSpaces = async () => {
       setIsLoading(true);
 
-      try {
-        const { data } = await API.getSpaces();
-        setSpaces(data);
-      } finally {
-        setIsLoading(false);
-      }
+      await userStore.getSpaces();
+
+      setIsLoading(false);
     };
 
     getSpaces();
-  }, []);
+  }, [userStore]);
 
   return (
     <div className="select">
@@ -44,7 +42,8 @@ const SelectSpaces = () => {
         onClick={handleClick}
         ref={rootRef}
       >
-        Пространства
+        <span className="select__label">Spaces</span>
+
         <IconSelect isOpen={isOpen} />
       </div>
 
@@ -54,13 +53,17 @@ const SelectSpaces = () => {
             <Loading />
           ) : (
             <>
-              {spaces.map((space) => (
+              {userStore.spaces.map((space) => (
                 <div className="select__dropdown__item" key={space.id}>
                   {space.name}
                 </div>
               ))}
 
-              <div className="add-space">Добавить пространство</div>
+              {userStore.spaces.length === 0 && <div>No spaces yet</div>}
+
+              <Link to="/create-space">
+                <div className="add-space">Create space</div>
+              </Link>
             </>
           )}
         </div>
@@ -69,4 +72,4 @@ const SelectSpaces = () => {
   );
 };
 
-export default SelectSpaces;
+export default observer(SelectSpaces);
