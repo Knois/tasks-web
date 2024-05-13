@@ -54,7 +54,7 @@ const Auth = () => {
 
   if (isLoading) {
     return (
-      <div className="auth">
+      <div className="screenbox">
         <Loading />
       </div>
     );

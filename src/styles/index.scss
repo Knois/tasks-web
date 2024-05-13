@@ -69,6 +69,19 @@ header {
   }
 }
 
+.screenbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 15px;
+
+  &-headed {
+    min-height: calc(100vh - $header-height);
+  }
+}
+
 .loader {
   border: 10px solid $color-white;
   border-top: 10px solid $color-dark;
@@ -92,6 +105,10 @@ header {
   flex-direction: column;
   gap: 15px;
   align-items: center;
+
+  &-createSpace {
+    margin-top: 15px;
+  }
 
   &__box {
     display: flex;
@@ -169,6 +186,11 @@ header {
       text-overflow: ellipsis;
     }
   }
+
+  &__error {
+    color: $color-error;
+    font-size: 20px;
+  }
 }
 
 .add-space {
@@ -190,6 +212,11 @@ header {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+}
+
+.success {
+  font-size: 20px;
+  color: $color-white;
 }
 
 @keyframes spin {
