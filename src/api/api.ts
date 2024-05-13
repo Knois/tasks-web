@@ -17,7 +17,7 @@ interface RequestParams {
 }
 
 const handleError = (error: any) => {
-  console.error("Error:", error.response?.data || error.message);
+  console.log("Error:", error.response?.data || error.message);
   throw new Error(error.response?.data || error.message);
 };
 
@@ -118,6 +118,19 @@ const API = {
     });
     if (!response) {
       throw new Error("Getting spaces failed without a server response.");
+    }
+    return response;
+  },
+
+  getSpaceById: async (id: ISpace["id"]): Promise<AxiosResponse<ISpace>> => {
+    const response = await sendRequest<ISpace>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.space + `/${id}`,
+    });
+
+    if (!response) {
+      throw new Error("Getting space failed without a server response.");
     }
     return response;
   },

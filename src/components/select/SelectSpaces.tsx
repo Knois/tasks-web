@@ -16,6 +16,8 @@ const SelectSpaces = () => {
 
   const handleClick = () => setIsOpen((s) => !s);
 
+  const closeDropdown = () => setIsOpen(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -54,14 +56,19 @@ const SelectSpaces = () => {
           ) : (
             <>
               {userStore.spaces.map((space) => (
-                <div className="select__dropdown__item" key={space.id}>
+                <Link
+                  to={`/space/${space.id}`}
+                  onClick={closeDropdown}
+                  key={space.id}
+                  className="select__dropdown__item"
+                >
                   {space.name}
-                </div>
+                </Link>
               ))}
 
               {userStore.spaces.length === 0 && <div>No spaces yet</div>}
 
-              <Link to="/create-space">
+              <Link to="/create-space" onClick={closeDropdown}>
                 <div className="add-space">Create space</div>
               </Link>
             </>
