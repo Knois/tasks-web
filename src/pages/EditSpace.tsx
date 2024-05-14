@@ -161,13 +161,18 @@ const EditSpace = () => {
             array={memberEmails}
             onChangeArray={setMemberEmails}
             defaultValue={userStore.email}
+            placeholder="Add member email"
           />
         </div>
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Group IDs</label>
 
-          <StringArrayInput array={groupIds} onChangeArray={setGroupIds} />
+          <StringArrayInput
+            array={groupIds}
+            onChangeArray={setGroupIds}
+            placeholder="Add group"
+          />
         </div>
 
         <button type="submit" className="form__button">

@@ -183,6 +183,23 @@ const API = {
     return response;
   },
 
+  createGroup: async (group: {
+    name: IGroup["name"];
+    memberEmails: IGroup["memberEmails"];
+    spaceId: ISpace["id"];
+  }): Promise<AxiosResponse<IGroup>> => {
+    const response = await sendRequest<ISpace>({
+      instance: appInstance,
+      method: "post",
+      url: endpoints.app.group,
+      data: group,
+    });
+    if (!response) {
+      throw new Error("Creating group failed without a server response.");
+    }
+    return response;
+  },
+
   getGroupsById: async (id: string): Promise<AxiosResponse<IGroup>> => {
     const response = await sendRequest<IGroup>({
       instance: appInstance,

@@ -4,12 +4,14 @@ import Loading from "components/shared/Loading";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-const CreateSpace = () => {
+const CreateGroup = () => {
+  const { spaceId } = useParams();
+
   const { userStore } = useStore();
 
   const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const [memberEmails, setMemberEmails] = useState<string[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,11 +21,17 @@ const CreateSpace = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!spaceId) {
+      return;
+    }
+
     setIsLoading(true);
     setIsError(false);
 
+    const group = { name, memberEmails, spaceId };
+
     try {
-      await API.createSpace({ name, description, memberEmails });
+      await API.createGroup(group);
       await userStore.getSpaces();
       setIsOk(true);
     } catch (error) {
@@ -36,7 +44,6 @@ const CreateSpace = () => {
 
   const resetForm = () => {
     setName("");
-    setDescription("");
     setMemberEmails([]);
     setIsOk(false);
     setIsError(false);
@@ -54,8 +61,9 @@ const CreateSpace = () => {
     return (
       <div className="screenbox screenbox-headed">
         <span className="success">Success!</span>
+
         <button onClick={resetForm} type="button" className="form__button">
-          Add another space
+          Add another group
         </button>
       </div>
     );
@@ -65,7 +73,7 @@ const CreateSpace = () => {
     <div className="screenbox screenbox-headed">
       <form className="form" onSubmit={onSubmit}>
         {isError && (
-          <span className="form__error">Error while creating space</span>
+          <span className="form__error">Error while creating group</span>
         )}
 
         <div className="form__box form__box-small">
@@ -75,18 +83,6 @@ const CreateSpace = () => {
             type="text"
             value={name}
             onChange={({ target: { value } }) => setName(value)}
-            required
-            className="form__input form__input-long"
-          />
-        </div>
-
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Description</label>
-
-          <input
-            type="text"
-            value={description}
-            onChange={({ target: { value } }) => setDescription(value)}
             required
             className="form__input form__input-long"
           />
@@ -103,11 +99,11 @@ const CreateSpace = () => {
         </div>
 
         <button type="submit" className="form__button">
-          Create space
+          Create group
         </button>
       </form>
     </div>
   );
 };
 
-export default observer(CreateSpace);
+export default observer(CreateGroup);

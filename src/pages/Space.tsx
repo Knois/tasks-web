@@ -10,8 +10,8 @@ const Space = () => {
   const { spaceId } = useParams();
 
   const [space, setSpace] = useState<null | ISpace>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleExpandSidebar = () => {
@@ -58,6 +58,12 @@ const Space = () => {
             <div className="sidebar__info__description">
               {space?.description}
             </div>
+
+            <Link to="create-group">
+              <button className="form__button form__button-small">
+                Add group
+              </button>
+            </Link>
           </>
         )}
       </div>

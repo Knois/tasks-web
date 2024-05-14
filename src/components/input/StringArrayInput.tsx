@@ -4,12 +4,14 @@ type Props = {
   array: string[];
   onChangeArray: React.Dispatch<React.SetStateAction<string[]>>;
   defaultValue?: string;
+  placeholder: string;
 };
 
 const StringArrayInput: React.FC<Props> = ({
   array,
   onChangeArray,
   defaultValue,
+  placeholder,
 }) => {
   const [email, setEmail] = useState<string>("");
 
@@ -42,7 +44,7 @@ const StringArrayInput: React.FC<Props> = ({
           value={email}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
-          placeholder="Add member email"
+          placeholder={placeholder}
           className="form__input"
         />
 

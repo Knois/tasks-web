@@ -3,6 +3,7 @@ import Loading from "components/shared/Loading";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import Auth from "pages/Auth";
+import CreateGroup from "pages/CreateGroup";
 import CreateSpace from "pages/CreateSpace";
 import EditSpace from "pages/EditSpace";
 import ErrorPage from "pages/ErrorPage";
@@ -50,11 +51,14 @@ const Router = () => {
           element: <Space />,
         },
         { path: "space/:spaceId/edit-space", element: <EditSpace /> },
+        { path: "space/:spaceId/create-group", element: <CreateGroup /> },
       ],
     },
   ];
 
-  const router = createBrowserRouter(routes, { basename: "/gateway/tasks" });
+  const options = { basename: "/gateway/tasks" };
+
+  const router = createBrowserRouter(routes, options);
 
   return <RouterProvider router={router} />;
 };
