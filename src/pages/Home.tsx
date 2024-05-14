@@ -1,5 +1,7 @@
+import { memo } from "react";
+
 const Home = () => {
-  return <div>home</div>;
+  return <div className="screenbox screenbox-headed">home</div>;
 };
 
-export default Home;
+export default memo(Home);

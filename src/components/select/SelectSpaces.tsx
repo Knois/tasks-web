@@ -1,4 +1,4 @@
-import IconSelect from "components/shared/icons/IconSelect";
+import IconExpandVertical from "components/shared/icons/IconExpandVertical";
 import Loading from "components/shared/Loading";
 import { useClickOutside } from "hooks/useClickOutside";
 import { useStore } from "hooks/useStore";
@@ -45,7 +45,7 @@ const SelectSpaces = () => {
       >
         <span className="select__label">Spaces</span>
 
-        <IconSelect isOpen={isOpen} />
+        <IconExpandVertical isOpen={isOpen} />
       </div>
 
       {isOpen && (

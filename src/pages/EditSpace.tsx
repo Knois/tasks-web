@@ -31,7 +31,7 @@ const EditSpace = () => {
     setGroupIds(data.groupIds);
   };
 
-  const setTriggers = () => {
+  const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
     setIsOk(false);
@@ -40,7 +40,7 @@ const EditSpace = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setTriggers();
+    setFormState();
 
     if (!id) {
       return;
@@ -66,7 +66,7 @@ const EditSpace = () => {
   ) => {
     event.preventDefault();
 
-    setTriggers();
+    setFormState();
 
     if (!id) {
       return;
@@ -136,7 +136,7 @@ const EditSpace = () => {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={({ target: { value } }) => setName(value)}
             required
             className="form__input form__input-long"
           />
@@ -148,7 +148,7 @@ const EditSpace = () => {
           <input
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={({ target: { value } }) => setDescription(value)}
             required
             className="form__input form__input-long"
           />
@@ -158,8 +158,8 @@ const EditSpace = () => {
           <label className="form__label form__label-small">Member Emails</label>
 
           <StringArrayInput
-            value={memberEmails}
-            onChange={setMemberEmails}
+            array={memberEmails}
+            onChangeArray={setMemberEmails}
             defaultValue={userStore.email}
           />
         </div>
@@ -167,7 +167,7 @@ const EditSpace = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Group IDs</label>
 
-          <StringArrayInput value={groupIds} onChange={setGroupIds} />
+          <StringArrayInput array={groupIds} onChangeArray={setGroupIds} />
         </div>
 
         <button type="submit" className="form__button">

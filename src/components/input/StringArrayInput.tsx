@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 type Props = {
-  value: string[];
-  onChange: React.Dispatch<React.SetStateAction<string[]>>;
+  array: string[];
+  onChangeArray: React.Dispatch<React.SetStateAction<string[]>>;
   defaultValue?: string;
 };
 
 const StringArrayInput: React.FC<Props> = ({
-  value,
-  onChange,
+  array,
+  onChangeArray,
   defaultValue,
 }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string>("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleInputChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(value);
   };
 
   const handleAddEmail = () => {
-    if (email && !value.includes(email)) {
+    if (email && !array.includes(email)) {
       // Проверка на дубликаты и пустой ввод
-      onChange([...value, email]);
+      onChangeArray([...array, email]);
       setEmail("");
     }
   };
@@ -30,10 +32,6 @@ const StringArrayInput: React.FC<Props> = ({
       event.preventDefault(); // предотвращаем отправку формы при нажатии Enter
       handleAddEmail();
     }
-  };
-
-  const removeEmail = (index: number) => {
-    onChange(value.filter((_, idx) => idx !== index));
   };
 
   return (
@@ -57,10 +55,11 @@ const StringArrayInput: React.FC<Props> = ({
         </button>
       </div>
 
-      {value.length > 0 && (
+      {array.length > 0 && (
         <ul>
-          {value.map((email, index) => {
-            const handleRemoveEmail = () => removeEmail(index);
+          {array.map((email, index) => {
+            const handleRemoveEmail = () =>
+              onChangeArray(array.filter((_, idx) => idx !== index));
 
             return (
               <li key={index}>
@@ -85,4 +84,4 @@ const StringArrayInput: React.FC<Props> = ({
   );
 };
 
-export default StringArrayInput;
+export default memo(StringArrayInput);

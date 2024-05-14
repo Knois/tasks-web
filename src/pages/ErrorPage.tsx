@@ -1,3 +1,7 @@
-const ErrorPage = () => <div>ErrorPage 404</div>;
+import { memo } from "react";
 
-export default ErrorPage;
+const ErrorPage = () => (
+  <div className="screenbox screenbox-headed">ErrorPage 404</div>
+);
+
+export default memo(ErrorPage);

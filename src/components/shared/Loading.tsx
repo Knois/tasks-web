@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Loading = () => <div className="loader" />;
 
-export default Loading;
+export default memo(Loading);

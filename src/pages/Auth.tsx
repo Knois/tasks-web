@@ -69,7 +69,7 @@ const Auth = () => {
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={({ target: { value } }) => setName(value)}
               required
               className="form__input"
               autoComplete="name"
@@ -82,7 +82,7 @@ const Auth = () => {
           <input
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={({ target: { value } }) => setEmail(value)}
             required
             className="form__input"
             autoComplete="email"
@@ -94,7 +94,7 @@ const Auth = () => {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={({ target: { value } }) => setPassword(value)}
             required
             className="form__input"
           />

@@ -1,8 +1,8 @@
 import API from "api/api";
-import IconExpandSidebar from "components/shared/icons/IconExpandSidebar";
+import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
 import IconSettings from "components/shared/icons/IconSettings";
 import Loading from "components/shared/Loading";
-import { useLayoutEffect, useState } from "react";
+import { memo, useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
@@ -70,11 +70,11 @@ const Space = () => {
         )}
 
         <div className="sidebar__tools__button" onClick={handleExpandSidebar}>
-          <IconExpandSidebar isOpen={isExpanded} />
+          <IconExpandHorizontal isOpen={isExpanded} />
         </div>
       </div>
     </aside>
   );
 };
 
-export default Space;
+export default memo(Space);

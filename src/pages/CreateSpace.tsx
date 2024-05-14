@@ -74,7 +74,7 @@ const CreateSpace = () => {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={({ target: { value } }) => setName(value)}
             required
             className="form__input form__input-long"
           />
@@ -86,7 +86,7 @@ const CreateSpace = () => {
           <input
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={({ target: { value } }) => setDescription(value)}
             required
             className="form__input form__input-long"
           />
@@ -95,7 +95,10 @@ const CreateSpace = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Member Emails</label>
 
-          <StringArrayInput value={memberEmails} onChange={setMemberEmails} />
+          <StringArrayInput
+            array={memberEmails}
+            onChangeArray={setMemberEmails}
+          />
         </div>
 
         <button type="submit" className="form__button">

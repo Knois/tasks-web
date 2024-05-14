@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import SelectSpaces from "../select/SelectSpaces";
 
 const Header = () => {
@@ -8,4 +10,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
