@@ -3,7 +3,7 @@ import React, { memo } from "react";
 type Props = { isOpen?: boolean };
 
 const IconExpandHorizontal: React.FC<Props> = ({ isOpen }) => {
-  const pathDirection = isOpen ? "M9 6L15 18" : "M15 6L9 18";
+  const pathDirection = isOpen ? "M9 6L15 12L9 18" : "M15 6L9 12L15 18";
 
   return (
     <svg
