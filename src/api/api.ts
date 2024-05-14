@@ -1,8 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { IAuthLoginResponse, IAuthRegisterResponse } from "types/AuthResponses";
 import { IGroup } from "types/Group";
-import { IAuthLoginResponse, IAuthRegisterResponse } from "types/IAuthResponse";
 import { ISpace } from "types/Space";
-import { ITask } from "types/Task";
 import { IUser } from "types/User";
 
 import appInstance from "./appInstance";
