@@ -152,6 +152,37 @@ const API = {
     return response;
   },
 
+  updateSpace: async (space: {
+    id: string;
+    name: string;
+    description: string;
+    memberEmails: string[];
+    groupIds: string[];
+  }): Promise<AxiosResponse<ISpace>> => {
+    const response = await sendRequest<ISpace>({
+      instance: appInstance,
+      method: "put",
+      url: endpoints.app.space + `/${space.id}`,
+      data: space,
+    });
+    if (!response) {
+      throw new Error("Updating space failed without a server response.");
+    }
+    return response;
+  },
+
+  deleteSpace: async (id: ISpace["id"]): Promise<AxiosResponse> => {
+    const response = await sendRequest({
+      instance: appInstance,
+      method: "delete",
+      url: endpoints.app.space + `/${id}`,
+    });
+    if (!response) {
+      throw new Error("Deleting space failed without a server response.");
+    }
+    return response;
+  },
+
   getGroupsById: async (id: string): Promise<AxiosResponse<IGroup>> => {
     const response = await sendRequest<IGroup>({
       instance: appInstance,

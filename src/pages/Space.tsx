@@ -1,7 +1,9 @@
 import API from "api/api";
+import IconExpandSidebar from "components/shared/icons/IconExpandSidebar";
+import IconSettings from "components/shared/icons/IconSettings";
 import Loading from "components/shared/Loading";
 import { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
 const Space = () => {
@@ -9,6 +11,14 @@ const Space = () => {
 
   const [space, setSpace] = useState<null | ISpace>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const handleExpandSidebar = () => {
+    setIsExpanded((s) => !s);
+  };
+
+  const sidebarClassName = isExpanded ? "sidebar sidebar-collapsed" : "sidebar";
 
   useLayoutEffect(() => {
     const getSpace = async () => {
@@ -19,8 +29,8 @@ const Space = () => {
       setIsLoading(true);
 
       try {
-        const response = await API.getSpaceById(spaceId);
-        setSpace(response.data);
+        const { data } = await API.getSpaceById(spaceId);
+        setSpace(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -31,18 +41,38 @@ const Space = () => {
     getSpace();
   }, [spaceId]);
 
-  if (isLoading) {
+  if (isLoading && !isExpanded) {
     return (
-      <aside className="sidebar sidebar-loading">
+      <aside className={sidebarClassName}>
         <Loading />
       </aside>
     );
   }
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar__name">{space?.name}</div>
-      <div className="sidebar__description">{space?.description}</div>
+    <aside className={sidebarClassName}>
+      <div className="sidebar__info">
+        {!isExpanded && (
+          <>
+            <div className="sidebar__info__name">{space?.name}</div>
+            <div className="sidebar__info__description">
+              {space?.description}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="sidebar__tools">
+        {!isExpanded && (
+          <Link to="edit-space" className="sidebar__tools__button">
+            <IconSettings />
+          </Link>
+        )}
+
+        <div className="sidebar__tools__button" onClick={handleExpandSidebar}>
+          <IconExpandSidebar isOpen={isExpanded} />
+        </div>
+      </div>
     </aside>
   );
 };

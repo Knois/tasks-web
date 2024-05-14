@@ -3,9 +3,14 @@ import React, { useState } from "react";
 type Props = {
   value: string[];
   onChange: React.Dispatch<React.SetStateAction<string[]>>;
+  defaultValue?: string;
 };
 
-const StringArrayInput: React.FC<Props> = ({ value, onChange }) => {
+const StringArrayInput: React.FC<Props> = ({
+  value,
+  onChange,
+  defaultValue,
+}) => {
   const [email, setEmail] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,12 +67,14 @@ const StringArrayInput: React.FC<Props> = ({ value, onChange }) => {
                 <div className="form__item">
                   <span className="form__item__label">{email}</span>
 
-                  <button
-                    onClick={handleRemoveEmail}
-                    className="form__button form__button-small"
-                  >
-                    Remove
-                  </button>
+                  {defaultValue !== email && (
+                    <button
+                      onClick={handleRemoveEmail}
+                      className="form__button form__button-small"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
               </li>
             );

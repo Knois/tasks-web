@@ -47,15 +47,27 @@
     justify-content: center;
     flex-direction: column;
 
+    &__list {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      min-width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
     &__item {
       cursor: pointer;
       min-width: 100%;
-      padding: 10px 15px;
+      padding: 0 15px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 300px;
       color: $color-black;
+      min-height: 39px;
+      align-content: center;
 
       &:hover {
         background-color: $color-dark;

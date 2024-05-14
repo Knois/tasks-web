@@ -4,6 +4,7 @@ import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import Auth from "pages/Auth";
 import CreateSpace from "pages/CreateSpace";
+import EditSpace from "pages/EditSpace";
 import ErrorPage from "pages/ErrorPage";
 import Home from "pages/Home";
 import Space from "pages/Space";
@@ -44,7 +45,11 @@ const Router = () => {
       children: [
         { path: "/", element: <Home /> },
         { path: "create-space", element: <CreateSpace /> },
-        { path: "space/:spaceId", element: <Space /> },
+        {
+          path: "space/:spaceId",
+          element: <Space />,
+        },
+        { path: "space/:spaceId/edit-space", element: <EditSpace /> },
       ],
     },
   ];

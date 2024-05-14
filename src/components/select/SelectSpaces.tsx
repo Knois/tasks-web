@@ -1,11 +1,10 @@
+import IconSelect from "components/shared/icons/IconSelect";
 import Loading from "components/shared/Loading";
 import { useClickOutside } from "hooks/useClickOutside";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
-import IconSelect from "./ui/IconSelect";
 
 const SelectSpaces = () => {
   const { userStore } = useStore();
@@ -55,16 +54,18 @@ const SelectSpaces = () => {
             <Loading />
           ) : (
             <>
-              {userStore.spaces.map((space) => (
-                <Link
-                  to={`/space/${space.id}`}
-                  onClick={closeDropdown}
-                  key={space.id}
-                  className="select__dropdown__item"
-                >
-                  {space.name}
-                </Link>
-              ))}
+              <div className="select__dropdown__list">
+                {userStore.spaces.map((space) => (
+                  <Link
+                    to={`/space/${space.id}`}
+                    onClick={closeDropdown}
+                    key={space.id}
+                    className="select__dropdown__item"
+                  >
+                    {space.name}
+                  </Link>
+                ))}
+              </div>
 
               {userStore.spaces.length === 0 && <div>No spaces yet</div>}
 

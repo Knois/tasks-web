@@ -36,36 +36,69 @@ header {
 }
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  justify-content: flex-start;
   min-height: calc(100vh - $header-height);
-  width: 240px;
+  width: 300px;
   background: $color-dark;
   padding: 20px;
   box-shadow: 4px 0 6px rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: width 0.2s ease-in-out;
 
-  &-loading {
-    justify-content: center;
+  &-collapsed {
+    padding: 20px 10px;
+    width: 55px;
   }
 
-  &__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    color: $color-white;
-  }
-
-  &__description {
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    flex: 1;
     width: 100%;
-    font-size: 14px;
-    text-align: start;
-    color: $color-white;
+
+    &__name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      color: $color-white;
+    }
+
+    &__description {
+      width: 100%;
+      font-size: 14px;
+      text-align: start;
+      color: $color-white;
+    }
+  }
+
+  &__tools {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    &__button {
+      border-radius: 10px;
+      cursor: pointer;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: $color-white-opacity;
+      }
+    }
   }
 }
 
@@ -180,6 +213,11 @@ header {
 
   &__error {
     color: $color-error;
+    font-size: 20px;
+  }
+
+  &__success {
+    color: $color-white;
     font-size: 20px;
   }
 }

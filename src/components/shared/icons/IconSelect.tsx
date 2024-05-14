@@ -1,6 +1,6 @@
 import React from "react";
 
-type Props = { isOpen: boolean };
+type Props = { isOpen?: boolean };
 
 const IconSelect: React.FC<Props> = ({ isOpen }) => {
   return (
