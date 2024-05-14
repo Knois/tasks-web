@@ -97,7 +97,7 @@ const API = {
     return response;
   },
 
-  updateUser: async (name: string): Promise<AxiosResponse<IUser>> => {
+  updateUser: async (name: ISpace["name"]): Promise<AxiosResponse<IUser>> => {
     const response = await sendRequest<IUser>({
       instance: appInstance,
       method: "put",
@@ -136,9 +136,9 @@ const API = {
   },
 
   createSpace: async (space: {
-    name: string;
-    description: string;
-    memberEmails: string[];
+    name: ISpace["name"];
+    description: ISpace["description"];
+    memberEmails: ISpace["memberEmails"];
   }): Promise<AxiosResponse<ISpace>> => {
     const response = await sendRequest<ISpace>({
       instance: appInstance,
@@ -153,11 +153,11 @@ const API = {
   },
 
   updateSpace: async (space: {
-    id: string;
-    name: string;
-    description: string;
-    memberEmails: string[];
-    groupIds: string[];
+    id: ISpace["id"];
+    name: ISpace["name"];
+    description: ISpace["description"];
+    memberEmails: ISpace["memberEmails"];
+    groupIds: ISpace["groupIds"];
   }): Promise<AxiosResponse<ISpace>> => {
     const response = await sendRequest<ISpace>({
       instance: appInstance,
@@ -196,30 +196,6 @@ const API = {
     });
     if (!response) {
       throw new Error("Creating group failed without a server response.");
-    }
-    return response;
-  },
-
-  getGroupsById: async (id: string): Promise<AxiosResponse<IGroup>> => {
-    const response = await sendRequest<IGroup>({
-      instance: appInstance,
-      method: "get",
-      url: endpoints.app.group + `/${id}`,
-    });
-    if (!response) {
-      throw new Error("Getting groups failed without a server response.");
-    }
-    return response;
-  },
-
-  getTasksByGroupId: async (id: string): Promise<AxiosResponse<ITask[]>> => {
-    const response = await sendRequest<ITask[]>({
-      instance: appInstance,
-      method: "get",
-      url: endpoints.app.task + `/userGroup/${id}`,
-    });
-    if (!response) {
-      throw new Error("Getting tasks failed without a server response.");
     }
     return response;
   },
