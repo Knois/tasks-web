@@ -7,7 +7,7 @@ import CreateSpace from "pages/CreateSpace";
 import ErrorPage from "pages/ErrorPage";
 import Home from "pages/Home";
 import Space from "pages/Space";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const Router = () => {
@@ -15,7 +15,7 @@ const Router = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   //сначала проверяем токен
-  useEffect(() => {
+  useLayoutEffect(() => {
     const checkAuth = async () => {
       await userStore.getUser();
       setIsLoading(false);
@@ -26,14 +26,7 @@ const Router = () => {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
+      <div className="screenbox">
         <Loading />
       </div>
     );

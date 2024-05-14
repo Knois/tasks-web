@@ -61,7 +61,7 @@ const Auth = () => {
   }
 
   return (
-    <div className="auth">
+    <div className="screenbox">
       <form onSubmit={onSubmit} className="form">
         {mode === "register" && (
           <div className="form__box">
