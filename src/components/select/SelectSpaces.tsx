@@ -57,7 +57,7 @@ const SelectSpaces = () => {
               <div className="select__dropdown__list">
                 {userStore.spaces.map((space) => (
                   <Link
-                    to={`/space/${space.id}`}
+                    to={`/${space.id}`}
                     onClick={closeDropdown}
                     key={space.id}
                     className="select__dropdown__item"

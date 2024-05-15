@@ -5,6 +5,7 @@ import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { IGroup } from "types/Group";
 import { ISpace } from "types/Space";
 
 const EditSpace = () => {
@@ -13,10 +14,10 @@ const EditSpace = () => {
   const { userStore } = useStore();
 
   const [id, setId] = useState(spaceId);
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [memberEmails, setMemberEmails] = useState<string[]>([]);
-  const [groupIds, setGroupIds] = useState<string[]>([]);
+  const [name, setName] = useState<ISpace["name"]>("");
+  const [description, setDescription] = useState<ISpace["description"]>("");
+  const [memberEmails, setMemberEmails] = useState<ISpace["memberEmails"]>([]);
+  const [groups, setGroups] = useState<ISpace["groups"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -28,7 +29,7 @@ const EditSpace = () => {
     setName(data.name);
     setDescription(data.description);
     setMemberEmails(data.memberEmails);
-    setGroupIds(data.groupIds);
+    setGroups(data.groups);
   };
 
   const setFormState = () => {
@@ -47,7 +48,9 @@ const EditSpace = () => {
     }
 
     try {
-      const space = { id, name, description, memberEmails, groupIds };
+      const space = { id, name, description, memberEmails, groups };
+
+      console.log(space);
 
       const { data } = await API.updateSpace(space);
       setDataToState(data);
@@ -162,16 +165,6 @@ const EditSpace = () => {
             onChangeArray={setMemberEmails}
             defaultValue={userStore.email}
             placeholder="Add member email"
-          />
-        </div>
-
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Group IDs</label>
-
-          <StringArrayInput
-            array={groupIds}
-            onChangeArray={setGroupIds}
-            placeholder="Add group"
           />
         </div>
 

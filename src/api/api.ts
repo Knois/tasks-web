@@ -156,7 +156,7 @@ const API = {
     name: ISpace["name"];
     description: ISpace["description"];
     memberEmails: ISpace["memberEmails"];
-    groupIds: ISpace["groupIds"];
+    groups: ISpace["groups"];
   }): Promise<AxiosResponse<ISpace>> => {
     const response = await sendRequest<ISpace>({
       instance: appInstance,

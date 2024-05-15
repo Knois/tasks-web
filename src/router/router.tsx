@@ -47,11 +47,11 @@ const Router = () => {
         { path: "/", element: <Home /> },
         { path: "create-space", element: <CreateSpace /> },
         {
-          path: "space/:spaceId",
+          path: ":spaceId",
           element: <Space />,
         },
-        { path: "space/:spaceId/edit-space", element: <EditSpace /> },
-        { path: "space/:spaceId/create-group", element: <CreateGroup /> },
+        { path: ":spaceId/edit-space", element: <EditSpace /> },
+        { path: ":spaceId/create-group", element: <CreateGroup /> },
       ],
     },
   ];
