@@ -1,6 +1,7 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
+import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
@@ -16,14 +17,22 @@ const CreateSpace = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<boolean>(false);
 
+  const textareaRef = useAutoResizeTextarea(description);
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsLoading(true);
     setIsError(false);
 
+    const space = {
+      name: name.trim(),
+      description: description.trim(),
+      memberEmails,
+    };
+
     try {
-      await API.createSpace({ name, description, memberEmails });
+      await API.createSpace(space);
       await userStore.getSpaces();
       setIsOk(true);
     } catch (error) {
@@ -77,18 +86,19 @@ const CreateSpace = () => {
             onChange={({ target: { value } }) => setName(value)}
             required
             className="form__input form__input-long"
+            maxLength={255}
           />
         </div>
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Description</label>
 
-          <input
-            type="text"
+          <textarea
             value={description}
             onChange={({ target: { value } }) => setDescription(value)}
-            required
-            className="form__input form__input-long"
+            className="form__input form__input-long form__input-textarea"
+            maxLength={255}
+            ref={textareaRef}
           />
         </div>
 

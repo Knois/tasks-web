@@ -19,7 +19,6 @@ body {
 
 #root {
   min-height: 100vh;
-  min-width: 100vw;
 }
 
 header {
@@ -72,9 +71,38 @@ header {
 
     &__description {
       width: 100%;
-      font-size: 14px;
+      font-size: 12px;
       text-align: start;
       color: $color-white;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      height: 120px;
+      overflow: auto;
+      border: 1px $color-white-opacity solid;
+      border-radius: 10px;
+      padding: 5px;
+      background: $color-bright-opacity;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 10px;
+      border-radius: 10px;
+      color: $color-white;
+
+      &:hover {
+        background: $color-white-opacity;
+      }
     }
   }
 
@@ -109,6 +137,7 @@ header {
   min-height: 100vh;
   flex-direction: column;
   gap: 15px;
+  padding: 20px 0;
 
   &-headed {
     min-height: calc(100vh - $header-height);
@@ -165,6 +194,12 @@ header {
 
     &-long {
       width: 410px;
+    }
+
+    &-textarea {
+      min-height: 100px;
+      overflow: hidden;
+      resize: none;
     }
   }
 

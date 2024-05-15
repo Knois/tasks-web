@@ -5,10 +5,9 @@ import { observer } from "mobx-react-lite";
 import Auth from "pages/Auth";
 import CreateGroup from "pages/CreateGroup";
 import CreateSpace from "pages/CreateSpace";
+import Dashboard from "pages/Dashboard";
 import EditSpace from "pages/EditSpace";
 import ErrorPage from "pages/ErrorPage";
-import Home from "pages/Home";
-import Space from "pages/Space";
 import { useLayoutEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
@@ -44,14 +43,15 @@ const Router = () => {
       element: <Layout />,
       errorElement: <ErrorPage />,
       children: [
-        { path: "/", element: <Home /> },
+        { path: "/", element: <Dashboard /> },
         { path: "create-space", element: <CreateSpace /> },
         {
           path: ":spaceId",
-          element: <Space />,
+          element: <Dashboard />,
         },
         { path: ":spaceId/edit-space", element: <EditSpace /> },
         { path: ":spaceId/create-group", element: <CreateGroup /> },
+        { path: ":spaceId/:groupId", element: <Dashboard /> },
       ],
     },
   ];

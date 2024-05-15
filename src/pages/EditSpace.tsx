@@ -1,11 +1,11 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
+import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IGroup } from "types/Group";
 import { ISpace } from "types/Space";
 
 const EditSpace = () => {
@@ -23,6 +23,8 @@ const EditSpace = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<boolean>(false);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
+  const textareaRef = useAutoResizeTextarea(description);
 
   const setDataToState = (data: ISpace) => {
     setId(data.id);
@@ -47,11 +49,15 @@ const EditSpace = () => {
       return;
     }
 
+    const space = {
+      id,
+      name: name.trim(),
+      description: description.trim(),
+      memberEmails,
+      groups,
+    };
+
     try {
-      const space = { id, name, description, memberEmails, groups };
-
-      console.log(space);
-
       const { data } = await API.updateSpace(space);
       setDataToState(data);
       await userStore.getSpaces();
@@ -142,18 +148,19 @@ const EditSpace = () => {
             onChange={({ target: { value } }) => setName(value)}
             required
             className="form__input form__input-long"
+            maxLength={255}
           />
         </div>
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Description</label>
 
-          <input
-            type="text"
+          <textarea
             value={description}
             onChange={({ target: { value } }) => setDescription(value)}
-            required
-            className="form__input form__input-long"
+            className="form__input form__input-long form__input-textarea"
+            maxLength={255}
+            ref={textareaRef}
           />
         </div>
 

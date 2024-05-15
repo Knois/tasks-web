@@ -6,7 +6,7 @@ import { memo, useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
-const Space = () => {
+const Dashboard = () => {
   const { spaceId } = useParams();
 
   const [space, setSpace] = useState<null | ISpace>(null);
@@ -55,8 +55,23 @@ const Space = () => {
         {!isExpanded && (
           <>
             <div className="sidebar__info__name">{space?.name}</div>
-            <div className="sidebar__info__description">
-              {space?.description}
+
+            {space?.description && (
+              <div className="sidebar__info__description">
+                {space.description}
+              </div>
+            )}
+
+            <div className="sidebar__info__list">
+              {space?.groups.map((group) => (
+                <Link
+                  to={`/${spaceId}/${group.id}`}
+                  key={group.id}
+                  className="sidebar__info__item"
+                >
+                  {group.name}
+                </Link>
+              ))}
             </div>
 
             <Link to="create-group">
@@ -70,7 +85,10 @@ const Space = () => {
 
       <div className="sidebar__tools">
         {!isExpanded && (
-          <Link to="edit-space" className="sidebar__tools__button">
+          <Link
+            to={`/${spaceId}/edit-space`}
+            className="sidebar__tools__button"
+          >
             <IconSettings />
           </Link>
         )}
@@ -83,4 +101,4 @@ const Space = () => {
   );
 };
 
-export default memo(Space);
+export default memo(Dashboard);
