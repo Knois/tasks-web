@@ -1,15 +1,11 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
-import { useStore } from "hooks/useStore";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const CreateGroup = () => {
   const { spaceId } = useParams();
-
-  const { userStore } = useStore();
 
   const [name, setName] = useState<string>("");
   const [memberEmails, setMemberEmails] = useState<string[]>([]);
@@ -32,7 +28,6 @@ const CreateGroup = () => {
 
     try {
       await API.createGroup(group);
-      await userStore.getSpaces();
       setIsOk(true);
     } catch (error) {
       console.log(error);
@@ -85,6 +80,7 @@ const CreateGroup = () => {
             onChange={({ target: { value } }) => setName(value)}
             required
             className="form__input form__input-long"
+            maxLength={255}
           />
         </div>
 
@@ -106,4 +102,4 @@ const CreateGroup = () => {
   );
 };
 
-export default observer(CreateGroup);
+export default memo(CreateGroup);

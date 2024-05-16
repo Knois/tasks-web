@@ -6,6 +6,7 @@ import Auth from "pages/Auth";
 import CreateGroup from "pages/CreateGroup";
 import CreateSpace from "pages/CreateSpace";
 import Dashboard from "pages/Dashboard";
+import EditGroup from "pages/EditGroup";
 import EditSpace from "pages/EditSpace";
 import ErrorPage from "pages/ErrorPage";
 import { useLayoutEffect, useState } from "react";
@@ -52,6 +53,7 @@ const Router = () => {
         { path: ":spaceId/edit-space", element: <EditSpace /> },
         { path: ":spaceId/create-group", element: <CreateGroup /> },
         { path: ":spaceId/:groupId", element: <Dashboard /> },
+        { path: ":spaceId/:groupId/edit-group", element: <EditGroup /> },
       ],
     },
   ];

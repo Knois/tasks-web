@@ -182,12 +182,25 @@ const API = {
     return response;
   },
 
+  getGroupById: async (id: IGroup["id"]): Promise<AxiosResponse<IGroup>> => {
+    const response = await sendRequest<IGroup>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.group + `/${id}`,
+    });
+
+    if (!response) {
+      throw new Error("Getting group failed without a server response.");
+    }
+    return response;
+  },
+
   createGroup: async (group: {
     name: IGroup["name"];
     memberEmails: IGroup["memberEmails"];
     spaceId: ISpace["id"];
   }): Promise<AxiosResponse<IGroup>> => {
-    const response = await sendRequest<ISpace>({
+    const response = await sendRequest<IGroup>({
       instance: appInstance,
       method: "post",
       url: endpoints.app.group,
@@ -195,6 +208,37 @@ const API = {
     });
     if (!response) {
       throw new Error("Creating group failed without a server response.");
+    }
+    return response;
+  },
+
+  updateGroup: async (
+    group: {
+      name: IGroup["name"];
+      memberEmails: IGroup["memberEmails"];
+    },
+    id: IGroup["id"],
+  ): Promise<AxiosResponse<IGroup>> => {
+    const response = await sendRequest<IGroup>({
+      instance: appInstance,
+      method: "put",
+      url: endpoints.app.group + `/${id}`,
+      data: group,
+    });
+    if (!response) {
+      throw new Error("Updating group failed without a server response.");
+    }
+    return response;
+  },
+
+  deleteGroup: async (id: IGroup["id"]): Promise<AxiosResponse> => {
+    const response = await sendRequest({
+      instance: appInstance,
+      method: "delete",
+      url: endpoints.app.group + `/${id}`,
+    });
+    if (!response) {
+      throw new Error("Deleting group failed without a server response.");
     }
     return response;
   },

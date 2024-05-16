@@ -1,37 +1,31 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
-import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ISpace } from "types/Space";
+import { IGroup } from "types/Group";
 
-const EditSpace = () => {
-  const { spaceId } = useParams();
+const EditGroup = () => {
+  const { groupId } = useParams();
 
   const { userStore } = useStore();
 
-  const [id, setId] = useState<ISpace["id"]>(spaceId ?? "");
-  const [name, setName] = useState<ISpace["name"]>("");
-  const [description, setDescription] = useState<ISpace["description"]>("");
-  const [memberEmails, setMemberEmails] = useState<ISpace["memberEmails"]>([]);
-  const [groups, setGroups] = useState<ISpace["groups"]>([]);
+  const [id, setId] = useState<IGroup["id"]>(groupId ?? "");
+
+  const [name, setName] = useState<IGroup["name"]>("");
+  const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<boolean>(false);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
-  const textareaRef = useAutoResizeTextarea(description);
-
-  const setDataToState = (data: ISpace) => {
+  const setDataToState = (data: IGroup) => {
     setId(data.id);
     setName(data.name);
-    setDescription(data.description);
     setMemberEmails(data.memberEmails);
-    setGroups(data.groups);
   };
 
   const setFormState = () => {
@@ -49,18 +43,14 @@ const EditSpace = () => {
       return;
     }
 
-    const space = {
-      id,
+    const group = {
       name: name.trim(),
-      description: description.trim(),
       memberEmails,
-      groups,
     };
 
     try {
-      const { data } = await API.updateSpace(space);
+      const { data } = await API.updateGroup(group, id);
       setDataToState(data);
-      await userStore.getSpaces();
       setIsOk(true);
     } catch (error) {
       console.log(error);
@@ -82,8 +72,7 @@ const EditSpace = () => {
     }
 
     try {
-      await API.deleteSpace(id);
-      await userStore.getSpaces();
+      await API.deleteGroup(id);
       setIsDeleted(true);
     } catch (error) {
       console.log(error);
@@ -94,15 +83,15 @@ const EditSpace = () => {
   };
 
   useLayoutEffect(() => {
-    const getSpace = async () => {
-      if (!spaceId) {
+    const getGroup = async () => {
+      if (!groupId) {
         return;
       }
 
       setIsLoading(true);
 
       try {
-        const { data } = await API.getSpaceById(spaceId);
+        const { data } = await API.getGroupById(groupId);
         setDataToState(data);
       } catch (error) {
         console.log(error);
@@ -111,8 +100,8 @@ const EditSpace = () => {
       }
     };
 
-    getSpace();
-  }, [spaceId]);
+    getGroup();
+  }, [groupId]);
 
   if (isLoading) {
     return (
@@ -125,7 +114,7 @@ const EditSpace = () => {
   if (isDeleted) {
     return (
       <div className="screenbox screenbox-headed">
-        <span className="form__success">Space deleted!</span>
+        <span className="form__success">Group deleted!</span>
       </div>
     );
   }
@@ -134,7 +123,7 @@ const EditSpace = () => {
     <div className="screenbox screenbox-headed">
       <form className="form" onSubmit={onSubmit}>
         {isError && (
-          <span className="form__error">Error while changing space</span>
+          <span className="form__error">Error while changing group</span>
         )}
 
         {isOk && <span className="form__success">Success!</span>}
@@ -153,18 +142,6 @@ const EditSpace = () => {
         </div>
 
         <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Description</label>
-
-          <textarea
-            value={description}
-            onChange={({ target: { value } }) => setDescription(value)}
-            className="form__input form__input-long form__input-textarea"
-            maxLength={255}
-            ref={textareaRef}
-          />
-        </div>
-
-        <div className="form__box form__box-small">
           <label className="form__label form__label-small">Member Emails</label>
 
           <StringArrayInput
@@ -176,15 +153,15 @@ const EditSpace = () => {
         </div>
 
         <button type="submit" className="form__button">
-          Update space
+          Update group
         </button>
       </form>
 
       <button type="button" className="form__button" onClick={onDelete}>
-        Delete space
+        Delete group
       </button>
     </div>
   );
 };
 
-export default observer(EditSpace);
+export default observer(EditGroup);

@@ -98,10 +98,26 @@ header {
       min-height: 40px;
       padding: 0 10px;
       border-radius: 10px;
-      color: $color-white;
+      gap: 5px;
 
       &:hover {
         background: $color-white-opacity;
+      }
+
+      &__name {
+        color: $color-white;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &__edit {
+        display: none;
+      }
+
+      &:hover .sidebar__info__item__edit {
+        display: block;
       }
     }
   }

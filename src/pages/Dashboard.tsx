@@ -1,4 +1,5 @@
 import API from "api/api";
+import IconEdit from "components/shared/icons/IconEdit";
 import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
 import IconSettings from "components/shared/icons/IconSettings";
 import Loading from "components/shared/Loading";
@@ -69,7 +70,14 @@ const Dashboard = () => {
                   key={group.id}
                   className="sidebar__info__item"
                 >
-                  {group.name}
+                  <div className="sidebar__info__item__name">{group.name}</div>
+
+                  <Link
+                    to={`/${spaceId}/${group.id}/edit-group`}
+                    className="sidebar__info__item__edit"
+                  >
+                    <IconEdit />
+                  </Link>
                 </Link>
               ))}
             </div>
