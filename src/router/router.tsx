@@ -54,6 +54,9 @@ const Router = () => {
         { path: ":spaceId/create-group", element: <CreateGroup /> },
         { path: ":spaceId/:groupId", element: <Dashboard /> },
         { path: ":spaceId/:groupId/edit-group", element: <EditGroup /> },
+        { path: ":spaceId/:groupId/create-task", element: <Dashboard /> },
+        { path: ":spaceId/:groupId/:taskId", element: <Dashboard /> },
+        { path: ":spaceId/:groupId/:taskId/edit-task", element: <Dashboard /> },
       ],
     },
   ];

@@ -38,7 +38,7 @@ header {
   min-height: calc(100vh - $header-height);
   width: 300px;
   background: $color-dark;
-  padding: 20px;
+  padding: 20px 10px;
   box-shadow: 4px 0 6px rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;
@@ -99,6 +99,38 @@ header {
       padding: 0 10px;
       border-radius: 10px;
       gap: 5px;
+
+      &::before,
+      &::after {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          $color-bright,
+          transparent
+        );
+        position: absolute;
+        content: "";
+        left: 0;
+        opacity: 0;
+      }
+
+      &-active {
+        position: relative;
+
+        &::before {
+          transition: opacity 0.2s ease-in-out;
+          top: 5px;
+          opacity: 1;
+        }
+
+        &::after {
+          transition: opacity 0.2s ease-in-out;
+          bottom: 5px;
+          opacity: 1;
+        }
+      }
 
       &:hover {
         background: $color-white-opacity;
