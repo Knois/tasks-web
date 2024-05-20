@@ -9,7 +9,6 @@
     align-items: center;
     gap: 10px;
     width: 200px;
-
     justify-content: space-between;
 
     &:hover {
@@ -18,6 +17,10 @@
 
     &-open {
       background-color: $color-white-opacity;
+    }
+
+    &-long {
+      width: 410px;
     }
   }
 
@@ -46,6 +49,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    z-index: 2;
 
     &__list {
       display: flex;

@@ -3,12 +3,13 @@ import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
 import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
+import { IGroup } from "types/Group";
 
 const CreateGroup = () => {
   const { spaceId } = useParams();
 
-  const [name, setName] = useState<string>("");
-  const [memberEmails, setMemberEmails] = useState<string[]>([]);
+  const [name, setName] = useState<IGroup["name"]>("");
+  const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);

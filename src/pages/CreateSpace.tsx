@@ -5,13 +5,14 @@ import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { ISpace } from "types/Space";
 
 const CreateSpace = () => {
   const { userStore } = useStore();
 
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [memberEmails, setMemberEmails] = useState<string[]>([]);
+  const [name, setName] = useState<ISpace["name"]>("");
+  const [description, setDescription] = useState<ISpace["description"]>("");
+  const [memberEmails, setMemberEmails] = useState<ISpace["memberEmails"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);

@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import Auth from "pages/Auth";
 import CreateGroup from "pages/CreateGroup";
 import CreateSpace from "pages/CreateSpace";
+import CreateTask from "pages/CreateTask";
 import Dashboard from "pages/Dashboard";
 import EditGroup from "pages/EditGroup";
 import EditSpace from "pages/EditSpace";
@@ -54,7 +55,7 @@ const Router = () => {
         { path: ":spaceId/create-group", element: <CreateGroup /> },
         { path: ":spaceId/:groupId", element: <Dashboard /> },
         { path: ":spaceId/:groupId/edit-group", element: <EditGroup /> },
-        { path: ":spaceId/:groupId/create-task", element: <Dashboard /> },
+        { path: ":spaceId/:groupId/create-task", element: <CreateTask /> },
         { path: ":spaceId/:groupId/:taskId", element: <Dashboard /> },
         { path: ":spaceId/:groupId/:taskId/edit-task", element: <Dashboard /> },
       ],
