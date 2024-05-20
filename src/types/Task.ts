@@ -5,9 +5,9 @@ export interface ITask {
   creationTime: string;
   updateTime: string;
   deadline: string;
-  status: string;
-  hardLvl: string;
-  priority: string;
+  status: "CREATED" | "IN_PROGRESS" | "DONE" | "REJECTED";
+  hardLvl: "LOW" | "MEDIUM" | "HIGH";
+  priority: "LOW" | "MEDIUM" | "HIGH";
   creatorEmail: string;
   responsibleEmail: string;
   groupId: string;

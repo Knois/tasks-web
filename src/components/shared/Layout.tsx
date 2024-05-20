@@ -1,16 +1,14 @@
 // components/Layout.js
 
+import Header from "components/shared/Header";
 import { memo } from "react";
 import { Outlet } from "react-router-dom";
-
-import Header from "./Header";
 
 const Layout = () => (
   <>
     <Header />
-    <main>
-      <Outlet />
-    </main>
+
+    <Outlet />
   </>
 );
 

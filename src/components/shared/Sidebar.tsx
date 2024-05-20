@@ -1,11 +1,10 @@
 import API from "api/api";
+import IconEdit from "components/shared/icons/IconEdit";
+import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
+import IconSettings from "components/shared/icons/IconSettings";
 import { useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
-
-import IconEdit from "./shared/icons/IconEdit";
-import IconExpandHorizontal from "./shared/icons/IconExpandHorizontal";
-import IconSettings from "./shared/icons/IconSettings";
 
 const Sidebar = () => {
   const { spaceId, groupId } = useParams();

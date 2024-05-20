@@ -1,6 +1,5 @@
+import SelectSpaces from "components/select/SelectSpaces";
 import { memo } from "react";
-
-import SelectSpaces from "../select/SelectSpaces";
 
 const Header = () => {
   return (

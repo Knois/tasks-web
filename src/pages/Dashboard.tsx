@@ -1,8 +1,14 @@
-import Sidebar from "components/Sidebar";
+import Board from "components/shared/Board";
+import Sidebar from "components/shared/Sidebar";
 import { memo } from "react";
 
 const Dashboard = () => {
-  return <Sidebar />;
+  return (
+    <main>
+      <Sidebar />
+      <Board />
+    </main>
+  );
 };
 
 export default memo(Dashboard);

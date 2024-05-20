@@ -2,6 +2,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { IAuthLoginResponse, IAuthRegisterResponse } from "types/AuthResponses";
 import { IGroup } from "types/Group";
 import { ISpace } from "types/Space";
+import { ITask } from "types/Task";
 import { IUser } from "types/User";
 
 import appInstance from "./appInstance";
@@ -239,6 +240,95 @@ const API = {
     });
     if (!response) {
       throw new Error("Deleting group failed without a server response.");
+    }
+    return response;
+  },
+
+  getTaskById: async (id: ITask["id"]): Promise<AxiosResponse<ITask>> => {
+    const response = await sendRequest<ITask>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.task + `/${id}`,
+    });
+
+    if (!response) {
+      throw new Error("Getting task failed without a server response.");
+    }
+    return response;
+  },
+
+  getTasksByGroupId: async (
+    id: IGroup["id"],
+  ): Promise<AxiosResponse<ITask[]>> => {
+    const response = await sendRequest<ITask[]>({
+      instance: appInstance,
+      method: "get",
+      url: endpoints.app.task + "/" + endpoints.app.group + `/${id}`,
+    });
+
+    if (!response) {
+      throw new Error(
+        "Getting tasks by group id failed without a server response.",
+      );
+    }
+    return response;
+  },
+
+  createTask: async (task: {
+    name: ITask["name"];
+    description: ITask["description"];
+    deadline: ITask["deadline"];
+    hardLvl: ITask["hardLvl"];
+    priority: ITask["priority"];
+    responsibleEmail: ITask["responsibleEmail"];
+    groupId: ITask["groupId"];
+  }): Promise<AxiosResponse<ITask>> => {
+    const response = await sendRequest<ITask>({
+      instance: appInstance,
+      method: "post",
+      url: endpoints.app.task,
+      data: task,
+    });
+    if (!response) {
+      throw new Error("Creating task failed without a server response.");
+    }
+    return response;
+  },
+
+  updateTask: async (
+    task: {
+      name: ITask["name"];
+      description: ITask["description"];
+      deadline: ITask["deadline"];
+      status: ITask["status"];
+      hardLvl: ITask["hardLvl"];
+      priority: ITask["priority"];
+      failureReason: ITask["failureReason"];
+      groupId: ITask["groupId"];
+      responsibleEmail: ITask["responsibleEmail"];
+    },
+    id: ITask["id"],
+  ): Promise<AxiosResponse<ITask>> => {
+    const response = await sendRequest<ITask>({
+      instance: appInstance,
+      method: "put",
+      url: endpoints.app.task + `/${id}`,
+      data: task,
+    });
+    if (!response) {
+      throw new Error("Updating task failed without a server response.");
+    }
+    return response;
+  },
+
+  deleteTask: async (id: ITask["id"]): Promise<AxiosResponse> => {
+    const response = await sendRequest({
+      instance: appInstance,
+      method: "delete",
+      url: endpoints.app.task + `/${id}`,
+    });
+    if (!response) {
+      throw new Error("Deleting task failed without a server response.");
     }
     return response;
   },

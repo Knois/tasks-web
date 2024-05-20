@@ -35,6 +35,16 @@ header {
   z-index: 2;
 }
 
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+.board {
+  padding: 20px;
+  width: 100%;
+}
+
 .screenbox {
   display: flex;
   align-items: center;
