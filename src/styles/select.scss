@@ -10,6 +10,11 @@
     gap: 10px;
     width: 200px;
     justify-content: space-between;
+    min-height: 44px;
+
+    &-disabled {
+      background-color: initial !important;
+    }
 
     &:hover {
       background-color: $color-white-opacity;

@@ -12,8 +12,6 @@ const EditGroup = () => {
 
   const { userStore } = useStore();
 
-  const [id, setId] = useState<IGroup["id"]>(groupId ?? "");
-
   const [name, setName] = useState<IGroup["name"]>("");
   const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
 
@@ -23,7 +21,6 @@ const EditGroup = () => {
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const setDataToState = (data: IGroup) => {
-    setId(data.id);
     setName(data.name);
     setMemberEmails(data.memberEmails);
   };
@@ -39,7 +36,7 @@ const EditGroup = () => {
 
     setFormState();
 
-    if (!id) {
+    if (!groupId) {
       return;
     }
 
@@ -49,7 +46,7 @@ const EditGroup = () => {
     };
 
     try {
-      const { data } = await API.updateGroup(group, id);
+      const { data } = await API.updateGroup(group, groupId);
       setDataToState(data);
       setIsOk(true);
     } catch (error) {
@@ -67,12 +64,12 @@ const EditGroup = () => {
 
     setFormState();
 
-    if (!id) {
+    if (!groupId) {
       return;
     }
 
     try {
-      await API.deleteGroup(id);
+      await API.deleteGroup(groupId);
       setIsDeleted(true);
     } catch (error) {
       console.log(error);

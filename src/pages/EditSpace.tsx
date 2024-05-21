@@ -13,7 +13,6 @@ const EditSpace = () => {
 
   const { userStore } = useStore();
 
-  const [id, setId] = useState<ISpace["id"]>(spaceId ?? "");
   const [name, setName] = useState<ISpace["name"]>("");
   const [description, setDescription] = useState<ISpace["description"]>("");
   const [memberEmails, setMemberEmails] = useState<ISpace["memberEmails"]>([]);
@@ -27,7 +26,6 @@ const EditSpace = () => {
   const textareaRef = useAutoResizeTextarea(description);
 
   const setDataToState = (data: ISpace) => {
-    setId(data.id);
     setName(data.name);
     setDescription(data.description);
     setMemberEmails(data.memberEmails);
@@ -45,12 +43,12 @@ const EditSpace = () => {
 
     setFormState();
 
-    if (!id) {
+    if (!spaceId) {
       return;
     }
 
     const space = {
-      id,
+      id: spaceId,
       name: name.trim(),
       description: description.trim(),
       memberEmails,
@@ -77,12 +75,12 @@ const EditSpace = () => {
 
     setFormState();
 
-    if (!id) {
+    if (!spaceId) {
       return;
     }
 
     try {
-      await API.deleteSpace(id);
+      await API.deleteSpace(spaceId);
       await userStore.getSpaces();
       setIsDeleted(true);
     } catch (error) {

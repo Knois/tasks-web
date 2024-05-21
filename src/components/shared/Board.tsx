@@ -1,4 +1,5 @@
 import API from "api/api";
+import TasksList from "components/shared/TasksList";
 import { memo, useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ITask } from "types/Task";
@@ -33,15 +34,7 @@ const Board = () => {
         </button>
       </Link>
 
-      <div className="board__list">
-        {tasks.map((task) => {
-          return (
-            <div className="board__item" key={task.id}>
-              {task.name}
-            </div>
-          );
-        })}
-      </div>
+      <TasksList tasks={tasks} />
     </div>
   );
 };

@@ -6,12 +6,15 @@ type Props = {
   value: string;
   options: string[];
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  disabled?: boolean;
 };
 
-const Select: React.FC<Props> = ({ value, options, setValue }) => {
+const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleClick = () => setIsOpen((s) => !s);
+  const handleClick = () => {
+    !disabled && setIsOpen((s) => !s);
+  };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -23,13 +26,13 @@ const Select: React.FC<Props> = ({ value, options, setValue }) => {
   return (
     <div className="select">
       <div
-        className={`select__root select__root-long ${isOpen ? "select__root-open" : ""}`}
+        className={`select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
         onClick={handleClick}
         ref={rootRef}
       >
         <span className="select__label">{value}</span>
 
-        <IconExpandVertical isOpen={isOpen} />
+        {!disabled && <IconExpandVertical isOpen={isOpen} />}
       </div>
 
       {isOpen && (

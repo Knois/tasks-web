@@ -9,6 +9,7 @@ import CreateTask from "pages/CreateTask";
 import Dashboard from "pages/Dashboard";
 import EditGroup from "pages/EditGroup";
 import EditSpace from "pages/EditSpace";
+import EditTask from "pages/EditTask";
 import ErrorPage from "pages/ErrorPage";
 import { useLayoutEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -56,7 +57,7 @@ const Router = () => {
         { path: ":spaceId/:groupId", element: <Dashboard /> },
         { path: ":spaceId/:groupId/edit-group", element: <EditGroup /> },
         { path: ":spaceId/:groupId/create-task", element: <CreateTask /> },
-        { path: ":spaceId/:groupId/:taskId", element: <Dashboard /> },
+        { path: ":spaceId/:groupId/:taskId", element: <EditTask /> },
         { path: ":spaceId/:groupId/:taskId/edit-task", element: <Dashboard /> },
       ],
     },

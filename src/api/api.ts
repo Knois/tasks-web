@@ -304,8 +304,8 @@ const API = {
       hardLvl: ITask["hardLvl"];
       priority: ITask["priority"];
       failureReason: ITask["failureReason"];
-      groupId: ITask["groupId"];
       responsibleEmail: ITask["responsibleEmail"];
+      groupId: ITask["groupId"];
     },
     id: ITask["id"],
   ): Promise<AxiosResponse<ITask>> => {

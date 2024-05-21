@@ -1,0 +1,20 @@
+.task {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: $color-white;
+
+  &__name {
+    color: $color-black;
+    font-size: 18px;
+  }
+
+  &__description {
+    color: $color-black;
+    font-size: 14px;
+  }
+}
