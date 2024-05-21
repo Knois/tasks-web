@@ -1,6 +1,7 @@
 import API from "api/api";
 import Select from "components/select/Select";
 import Loading from "components/shared/Loading";
+import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ITask, Level } from "types/Task";
@@ -19,6 +20,8 @@ const CreateTask = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<boolean>(false);
+
+  const textareaRef = useAutoResizeTextarea(description);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -105,13 +108,12 @@ const CreateTask = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Description</label>
 
-          <input
-            type="text"
+          <textarea
             value={description}
             onChange={({ target: { value } }) => setDescription(value)}
-            required
-            className="form__input form__input-long"
+            className="form__input form__input-long form__input-textarea"
             maxLength={255}
+            ref={textareaRef}
           />
         </div>
 
