@@ -212,21 +212,23 @@ const EditTask = () => {
           />
         </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">
-            Failure reason
-          </label>
+        {status === Status.REJECTED && (
+          <div className="form__box form__box-small">
+            <label className="form__label form__label-small">
+              Failure reason
+            </label>
 
-          <input
-            type="text"
-            value={failureReason}
-            onChange={({ target: { value } }) => setFailureReason(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
-            disabled={!isEditing}
-          />
-        </div>
+            <input
+              type="text"
+              value={failureReason}
+              onChange={({ target: { value } }) => setFailureReason(value)}
+              required
+              className="form__input form__input-long"
+              maxLength={255}
+              disabled={!isEditing}
+            />
+          </div>
+        )}
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">
