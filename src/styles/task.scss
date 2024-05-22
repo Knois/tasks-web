@@ -12,6 +12,11 @@
     -webkit-box-shadow 0.2s ease-in-out,
     -moz-box-shadow 0.2s ease-in-out;
 
+  &-completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
   &:hover {
     box-shadow: 1px 1px 15px -1px $color-black-opacity;
     -webkit-box-shadow: 1px 1px 15px -1px $color-black-opacity;
@@ -21,10 +26,16 @@
   &__name {
     color: $color-black;
     font-size: 18px;
+    text-wrap: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__description {
     color: $color-black;
     font-size: 14px;
+    text-wrap: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

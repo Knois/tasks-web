@@ -100,15 +100,11 @@ const EditGroup = () => {
   }, [groupId]);
 
   if (isLoading) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox screenbox-headed">
+    <>
       <form className="form" onSubmit={onSubmit}>
         {isError && (
           <span className="form__error">Error while changing group</span>
@@ -146,7 +142,7 @@ const EditGroup = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete group
       </button>
-    </div>
+    </>
   );
 };
 

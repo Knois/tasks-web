@@ -59,95 +59,85 @@ const CreateTask = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox screenbox-headed">
-      <form className="form" onSubmit={onSubmit}>
-        {isError && (
-          <span className="form__error">Error while creating task</span>
-        )}
+    <form className="form" onSubmit={onSubmit}>
+      {isError && (
+        <span className="form__error">Error while creating task</span>
+      )}
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Name</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Name</label>
 
-          <input
-            type="text"
-            value={name}
-            onChange={({ target: { value } }) => setName(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
-          />
-        </div>
+        <input
+          type="text"
+          value={name}
+          onChange={({ target: { value } }) => setName(value)}
+          required
+          className="form__input form__input-long"
+          maxLength={255}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Description</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Description</label>
 
-          <textarea
-            value={description}
-            onChange={({ target: { value } }) => setDescription(value)}
-            className="form__input form__input-long form__input-textarea"
-            maxLength={255}
-            ref={textareaRef}
-          />
-        </div>
+        <textarea
+          value={description}
+          onChange={({ target: { value } }) => setDescription(value)}
+          className="form__input form__input-long form__input-textarea"
+          maxLength={255}
+          ref={textareaRef}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Deadline</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Deadline</label>
 
-          <DateTimePicker value={deadline} setValue={setDeadline} />
-        </div>
+        <DateTimePicker value={deadline} setValue={setDeadline} />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Hard level</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Hard level</label>
 
-          <Select
-            value={hardLvl}
-            options={Object.values(Level)}
-            setValue={
-              setHardLvl as React.Dispatch<React.SetStateAction<string>>
-            }
-          />
-        </div>
+        <Select
+          value={hardLvl}
+          options={Object.values(Level)}
+          setValue={setHardLvl as React.Dispatch<React.SetStateAction<string>>}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Priority</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Priority</label>
 
-          <Select
-            value={priority}
-            options={Object.values(Level)}
-            setValue={
-              setPriority as React.Dispatch<React.SetStateAction<string>>
-            }
-          />
-        </div>
+        <Select
+          value={priority}
+          options={Object.values(Level)}
+          setValue={setPriority as React.Dispatch<React.SetStateAction<string>>}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">
-            Responsible email
-          </label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">
+          Responsible email
+        </label>
 
-          <input
-            type="text"
-            value={responsibleEmail}
-            onChange={({ target: { value } }) => setResponsibleEmail(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
-          />
-        </div>
+        <input
+          type="text"
+          value={responsibleEmail}
+          onChange={({ target: { value } }) => setResponsibleEmail(value)}
+          required
+          className="form__input form__input-long"
+          maxLength={255}
+        />
+      </div>
 
-        <button type="submit" className="form__button">
-          Create task
-        </button>
-      </form>
-    </div>
+      <button type="submit" className="form__button">
+        Create task
+      </button>
+    </form>
   );
 };
 

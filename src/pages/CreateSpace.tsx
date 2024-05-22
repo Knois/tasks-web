@@ -47,60 +47,54 @@ const CreateSpace = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox screenbox-headed">
-      <form className="form" onSubmit={onSubmit}>
-        {isError && (
-          <span className="form__error">Error while creating space</span>
-        )}
+    <form className="form" onSubmit={onSubmit}>
+      {isError && (
+        <span className="form__error">Error while creating space</span>
+      )}
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Name</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Name</label>
 
-          <input
-            type="text"
-            value={name}
-            onChange={({ target: { value } }) => setName(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
-          />
-        </div>
+        <input
+          type="text"
+          value={name}
+          onChange={({ target: { value } }) => setName(value)}
+          required
+          className="form__input form__input-long"
+          maxLength={255}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Description</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Description</label>
 
-          <textarea
-            value={description}
-            onChange={({ target: { value } }) => setDescription(value)}
-            className="form__input form__input-long form__input-textarea"
-            maxLength={255}
-            ref={textareaRef}
-          />
-        </div>
+        <textarea
+          value={description}
+          onChange={({ target: { value } }) => setDescription(value)}
+          className="form__input form__input-long form__input-textarea"
+          maxLength={255}
+          ref={textareaRef}
+        />
+      </div>
 
-        <div className="form__box form__box-small">
-          <label className="form__label form__label-small">Member Emails</label>
+      <div className="form__box form__box-small">
+        <label className="form__label form__label-small">Member Emails</label>
 
-          <StringArrayInput
-            array={memberEmails}
-            onChangeArray={setMemberEmails}
-            placeholder="Add member email"
-          />
-        </div>
+        <StringArrayInput
+          array={memberEmails}
+          onChangeArray={setMemberEmails}
+          placeholder="Add member email"
+        />
+      </div>
 
-        <button type="submit" className="form__button">
-          Create space
-        </button>
-      </form>
-    </div>
+      <button type="submit" className="form__button">
+        Create space
+      </button>
+    </form>
   );
 };
 

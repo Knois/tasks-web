@@ -2,16 +2,21 @@ import API from "api/api";
 import { ReactComponent as Edit } from "assets/svg/edit.svg";
 import { ReactComponent as Settings } from "assets/svg/settings.svg";
 import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
-import { useLayoutEffect, useState } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
-const Sidebar = () => {
+type Props = {
+  isExpanded: boolean;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Sidebar: React.FC<Props> = ({ isExpanded, setIsExpanded }) => {
   const { spaceId, groupId } = useParams();
 
-  const [space, setSpace] = useState<null | ISpace>(null);
+  const [space, setSpace] = React.useState<null | ISpace>(null);
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     const getSpace = async () => {
       if (!spaceId) {
         return;
@@ -27,8 +32,6 @@ const Sidebar = () => {
 
     getSpace();
   }, [spaceId]);
-
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const sidebarClassName = isExpanded ? "sidebar sidebar-collapsed" : "sidebar";
 
@@ -95,4 +98,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -53,15 +53,11 @@ const Auth = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="screenbox">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox">
+    <>
       <form onSubmit={onSubmit} className="form">
         {mode === "register" && (
           <div className="form__box">
@@ -112,7 +108,7 @@ const Auth = () => {
       >
         {mode === "login" ? "Sign up" : "Sign in"}
       </button>
-    </div>
+    </>
   );
 };
 

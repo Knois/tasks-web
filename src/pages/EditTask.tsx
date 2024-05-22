@@ -124,15 +124,11 @@ const EditTask = () => {
   }, [taskId]);
 
   if (isLoading) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox screenbox-headed">
+    <>
       <form className="form" onSubmit={onSubmit}>
         {isError && (
           <span className="form__error">Error while changing task</span>
@@ -268,7 +264,7 @@ const EditTask = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete task
       </button>
-    </div>
+    </>
   );
 };
 

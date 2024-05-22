@@ -112,15 +112,11 @@ const EditSpace = () => {
   }, [spaceId]);
 
   if (isLoading) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="screenbox screenbox-headed">
+    <>
       <form className="form" onSubmit={onSubmit}>
         {isError && (
           <span className="form__error">Error while changing space</span>
@@ -170,7 +166,7 @@ const EditSpace = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete space
       </button>
-    </div>
+    </>
   );
 };
 

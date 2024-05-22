@@ -41,7 +41,7 @@ const Board = () => {
 
   if (isLoading) {
     return (
-      <div className="board screenbox screenbox-headed">
+      <div className="board">
         <Loading />
       </div>
     );

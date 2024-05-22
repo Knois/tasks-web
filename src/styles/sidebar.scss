@@ -1,22 +1,24 @@
 .sidebar {
-  min-height: calc(100vh - $header-height);
-  min-width: 300px;
+  width: 300px;
   background: $color-dark;
   padding: 20px 10px;
   box-shadow: 4px 0 6px $color-black-opacity;
   -webkit-box-shadow: 4px 0 6px $color-black-opacity;
   -moz-box-shadow: 4px 0 6px $color-black-opacity;
-  position: relative;
+  position: fixed;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: width 0.2s ease-in-out;
+  bottom: 0;
+  left: 0;
+  top: $header-height;
 
   &-collapsed {
     padding: 20px 10px;
-    min-width: 55px;
+    width: 55px;
   }
 
   &__info {

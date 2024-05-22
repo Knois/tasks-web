@@ -36,17 +36,31 @@ header {
   box-shadow: 0 4px 6px $color-black-opacity;
   -webkit-box-shadow: 0 4px 6px $color-black-opacity;
   -moz-box-shadow: 0 4px 6px $color-black-opacity;
-  position: relative;
+  position: fixed;
   z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-main {
+.main {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc($header-height + 20px) 20px 20px 320px;
+  min-width: calc(100% - 300px);
+  transition:
+    padding 0.2s ease-in-out,
+    min-width 0.2s ease-in-out;
+
+  &-wide {
+    padding-left: 75px;
+    min-width: calc(100% - 55px);
+  }
 }
 
 .board {
-  padding: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -66,12 +80,6 @@ main {
   justify-content: center;
   min-height: 100vh;
   flex-direction: column;
-  gap: 15px;
-  padding: 20px 0;
-
-  &-headed {
-    min-height: calc(100vh - $header-height);
-  }
 }
 
 .loader {
