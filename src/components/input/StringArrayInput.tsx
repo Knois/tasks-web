@@ -37,8 +37,8 @@ const StringArrayInput: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <div style={{ display: "flex", gap: "10px" }}>
+    <>
+      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <input
           type="email"
           value={email}
@@ -82,7 +82,7 @@ const StringArrayInput: React.FC<Props> = ({
           })}
         </ul>
       )}
-    </div>
+    </>
   );
 };
 

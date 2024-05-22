@@ -1,5 +1,3 @@
-// components/Layout.js
-
 import Header from "components/shared/Header";
 import Sidebar from "components/shared/Sidebar";
 import { useStore } from "hooks/useStore";
@@ -9,7 +7,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   const { appStore } = useStore();
 
-  const className = `main ${appStore.isExpandedSidebar ? "main-wide" : ""}`;
+  const className = `main ${!appStore.isExpandedSidebar ? "main-wide" : ""}`;
 
   return (
     <>

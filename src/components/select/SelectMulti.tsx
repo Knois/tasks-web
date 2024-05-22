@@ -1,15 +1,21 @@
+import { ReactComponent as Radio } from "assets/svg/radio.svg";
+import { ReactComponent as RadioFilled } from "assets/svg/radio_filled.svg";
 import IconExpandVertical from "components/shared/icons/IconExpandVertical";
 import { useClickOutside } from "hooks/useClickOutside";
 import React, { memo, useRef, useState } from "react";
-
 type Props = {
-  value: string;
+  values: string[];
   options: string[];
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValues: React.Dispatch<React.SetStateAction<string[]>>;
   disabled?: boolean;
 };
 
-const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
+const SelectMulti: React.FC<Props> = ({
+  values,
+  options,
+  setValues,
+  disabled,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -23,14 +29,16 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
     setIsOpen(false);
   });
 
+  const label = values.length
+    ? `${values.length} ${values.length === 1 ? "member" : "members"}`
+    : "Select members";
+
+  const rootClassName = `select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`;
+
   return (
     <div className="select">
-      <div
-        className={`select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
-        onClick={handleClick}
-        ref={rootRef}
-      >
-        <span className="select__label">{value}</span>
+      <div className={rootClassName} onClick={handleClick} ref={rootRef}>
+        <span className="select__label">{label}</span>
 
         {!disabled && <IconExpandVertical isOpen={isOpen} />}
       </div>
@@ -39,9 +47,14 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
         <div className="select__dropdown" ref={dropdownRef}>
           <div className="select__dropdown__list">
             {options.map((option, index) => {
+              const isSelected = values.includes(option);
+
+              const icon = isSelected ? <RadioFilled /> : <Radio />;
+
               const handleClick = () => {
-                setValue(option);
-                setIsOpen(false);
+                isSelected
+                  ? setValues((s) => s.filter((v) => v !== option))
+                  : setValues((s) => [...s, option]);
               };
 
               return (
@@ -50,6 +63,8 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
                   key={index}
                   onClick={handleClick}
                 >
+                  {icon}
+
                   <span className="select__dropdown__item__label">
                     {option}
                   </span>
@@ -63,4 +78,4 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
   );
 };
 
-export default memo(Select);
+export default memo(SelectMulti);

@@ -1,21 +1,22 @@
 import API from "api/api";
-import StringArrayInput from "components/input/StringArrayInput";
+import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
-import { useStore } from "hooks/useStore";
-import { observer } from "mobx-react-lite";
-import { useLayoutEffect, useState } from "react";
+import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IGroup } from "types/Group";
+import { ISpace } from "types/Space";
 
 const EditGroup = () => {
-  const { groupId } = useParams();
+  const { spaceId, groupId } = useParams();
 
   const navigate = useNavigate();
 
-  const { userStore } = useStore();
-
   const [name, setName] = useState<IGroup["name"]>("");
   const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
+
+  const [availableMemberEmails, setAvailableMemberEmails] = useState<
+    ISpace["memberEmails"]
+  >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -79,8 +80,22 @@ const EditGroup = () => {
   };
 
   useLayoutEffect(() => {
+    //get space info and set available member emails
+    const getSpace = async () => {
+      if (!spaceId) {
+        return;
+      }
+
+      try {
+        const { data } = await API.getSpaceById(spaceId);
+        setAvailableMemberEmails(data.memberEmails);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const getGroup = async () => {
-      if (!groupId) {
+      if (!groupId || !spaceId) {
         return;
       }
 
@@ -89,6 +104,7 @@ const EditGroup = () => {
       try {
         const { data } = await API.getGroupById(groupId);
         setDataToState(data);
+        await getSpace();
       } catch (error) {
         console.log(error);
       } finally {
@@ -97,7 +113,7 @@ const EditGroup = () => {
     };
 
     getGroup();
-  }, [groupId]);
+  }, [groupId, spaceId]);
 
   if (isLoading) {
     return <Loading />;
@@ -126,11 +142,10 @@ const EditGroup = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Member Emails</label>
 
-          <StringArrayInput
-            array={memberEmails}
-            onChangeArray={setMemberEmails}
-            defaultValue={userStore.email}
-            placeholder="Add member email"
+          <SelectMulti
+            values={memberEmails}
+            options={availableMemberEmails}
+            setValues={setMemberEmails}
           />
         </div>
 
@@ -146,4 +161,4 @@ const EditGroup = () => {
   );
 };
 
-export default observer(EditGroup);
+export default memo(EditGroup);

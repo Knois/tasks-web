@@ -65,26 +65,38 @@
       align-items: center;
       justify-content: flex-start;
       flex-direction: column;
-      min-width: 100%;
+      width: 100%;
       max-height: 70vh;
       overflow-y: auto;
     }
 
     &__item {
-      cursor: pointer;
       min-width: 100%;
       padding: 0 15px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       max-width: 300px;
       color: $color-black;
+      cursor: pointer;
       min-height: 40px;
-      align-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 10px;
 
       &:hover {
         background-color: $color-dark;
         color: $color-white;
+      }
+
+      &__label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
+
+      & > svg {
+        min-width: 19px;
       }
     }
   }

@@ -65,7 +65,9 @@ const SelectSpaces = () => {
                     key={space.id}
                     className="select__dropdown__item"
                   >
-                    {space.name}
+                    <span className="select__dropdown__item__label">
+                      {space.name}
+                    </span>
                   </Link>
                 ))}
               </div>

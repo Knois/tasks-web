@@ -1,9 +1,10 @@
 import API from "api/api";
-import StringArrayInput from "components/input/StringArrayInput";
+import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
-import { memo, useState } from "react";
+import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IGroup } from "types/Group";
+import { ISpace } from "types/Space";
 
 const CreateGroup = () => {
   const { spaceId } = useParams();
@@ -12,6 +13,10 @@ const CreateGroup = () => {
 
   const [name, setName] = useState<IGroup["name"]>("");
   const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
+
+  const [availableMemberEmails, setAvailableMemberEmails] = useState<
+    ISpace["memberEmails"]
+  >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -39,6 +44,28 @@ const CreateGroup = () => {
     }
   };
 
+  useLayoutEffect(() => {
+    //get space info and set available member emails
+    const getSpace = async () => {
+      if (!spaceId) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      try {
+        const { data } = await API.getSpaceById(spaceId);
+        setAvailableMemberEmails(data.memberEmails);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getSpace();
+  }, [spaceId]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -65,10 +92,10 @@ const CreateGroup = () => {
       <div className="form__box form__box-small">
         <label className="form__label form__label-small">Member Emails</label>
 
-        <StringArrayInput
-          array={memberEmails}
-          onChangeArray={setMemberEmails}
-          placeholder="Add member email"
+        <SelectMulti
+          values={memberEmails}
+          options={availableMemberEmails}
+          setValues={setMemberEmails}
         />
       </div>
 
