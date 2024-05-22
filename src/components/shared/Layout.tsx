@@ -2,22 +2,25 @@
 
 import Header from "components/shared/Header";
 import Sidebar from "components/shared/Sidebar";
-import { memo, useState } from "react";
+import { useStore } from "hooks/useStore";
+import { observer } from "mobx-react-lite";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { appStore } = useStore();
+
+  const className = `main ${appStore.isExpandedSidebar ? "main-wide" : ""}`;
 
   return (
     <>
       <Header />
-      <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+      <Sidebar />
 
-      <main className={`main ${isExpanded ? "main-wide" : ""}`}>
+      <main className={className}>
         <Outlet />
       </main>
     </>
   );
 };
 
-export default memo(Layout);
+export default observer(Layout);

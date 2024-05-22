@@ -7,7 +7,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SelectSpaces = () => {
-  const { userStore } = useStore();
+  const { userStore, appStore } = useStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,7 +15,10 @@ const SelectSpaces = () => {
 
   const handleClick = () => setIsOpen((s) => !s);
 
-  const closeDropdown = () => setIsOpen(false);
+  const handleSelect = () => {
+    appStore.setIsExpandedSidebar(true);
+    setIsOpen(false);
+  };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -58,7 +61,7 @@ const SelectSpaces = () => {
                 {userStore.spaces.map((space) => (
                   <Link
                     to={`/${space.id}`}
-                    onClick={closeDropdown}
+                    onClick={handleSelect}
                     key={space.id}
                     className="select__dropdown__item"
                   >
@@ -69,7 +72,7 @@ const SelectSpaces = () => {
 
               {userStore.spaces.length === 0 && <div>No spaces yet</div>}
 
-              <Link to="/create-space" onClick={closeDropdown}>
+              <Link to="/create-space" onClick={() => setIsOpen(false)}>
                 <div className="add-space">Create space</div>
               </Link>
             </>

@@ -2,17 +2,16 @@ import API from "api/api";
 import { ReactComponent as Edit } from "assets/svg/edit.svg";
 import { ReactComponent as Settings } from "assets/svg/settings.svg";
 import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
+import { useStore } from "hooks/useStore";
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
-type Props = {
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Sidebar: React.FC<Props> = ({ isExpanded, setIsExpanded }) => {
+const Sidebar = () => {
   const { spaceId, groupId } = useParams();
+
+  const { appStore } = useStore();
 
   const [space, setSpace] = React.useState<null | ISpace>(null);
 
@@ -33,18 +32,22 @@ const Sidebar: React.FC<Props> = ({ isExpanded, setIsExpanded }) => {
     getSpace();
   }, [spaceId]);
 
-  const sidebarClassName = isExpanded ? "sidebar sidebar-collapsed" : "sidebar";
+  const sidebarClassName = !appStore.isExpandedSidebar
+    ? "sidebar sidebar-collapsed"
+    : "sidebar";
 
   const handleExpandSidebar = () => {
-    setIsExpanded((s) => !s);
+    appStore.setIsExpandedSidebar(!appStore.isExpandedSidebar);
   };
 
   return (
     <aside className={sidebarClassName}>
       <div className="sidebar__info">
-        {!isExpanded && (
+        {appStore.isExpandedSidebar && (
           <>
-            <div className="sidebar__info__name">{space?.name}</div>
+            {space?.name && (
+              <div className="sidebar__info__name">{space.name}</div>
+            )}
 
             {space?.description && (
               <div className="sidebar__info__description">
@@ -81,7 +84,7 @@ const Sidebar: React.FC<Props> = ({ isExpanded, setIsExpanded }) => {
       </div>
 
       <div className="sidebar__tools">
-        {!isExpanded && (
+        {appStore.isExpandedSidebar && (
           <Link
             to={`/${spaceId}/edit-space`}
             className="sidebar__tools__button"
@@ -91,11 +94,11 @@ const Sidebar: React.FC<Props> = ({ isExpanded, setIsExpanded }) => {
         )}
 
         <div className="sidebar__tools__button" onClick={handleExpandSidebar}>
-          <IconExpandHorizontal isOpen={isExpanded} />
+          <IconExpandHorizontal isOpen={appStore.isExpandedSidebar} />
         </div>
       </div>
     </aside>
   );
 };
 
-export default React.memo(Sidebar);
+export default observer(Sidebar);
