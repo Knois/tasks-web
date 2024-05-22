@@ -1,13 +1,16 @@
 import API from "api/api";
 import Select from "components/select/Select";
+import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { memo, useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ITask, Level, Status } from "types/Task";
 
 const EditTask = () => {
   const { taskId } = useParams();
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState<ITask["name"]>("");
   const [description, setDescription] = useState<ITask["description"]>("");
@@ -23,8 +26,7 @@ const EditTask = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isOk, setIsOk] = useState<boolean>(false);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
@@ -44,7 +46,6 @@ const EditTask = () => {
   const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
-    setIsOk(false);
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -70,8 +71,7 @@ const EditTask = () => {
 
     try {
       await API.updateTask(task, taskId);
-      setIsOk(true);
-      setIsEditing(false);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -93,7 +93,7 @@ const EditTask = () => {
 
     try {
       await API.deleteTask(taskId);
-      setIsDeleted(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -131,22 +131,12 @@ const EditTask = () => {
     );
   }
 
-  if (isDeleted) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <span className="form__success">Task deleted!</span>
-      </div>
-    );
-  }
-
   return (
     <div className="screenbox screenbox-headed">
       <form className="form" onSubmit={onSubmit}>
         {isError && (
           <span className="form__error">Error while changing task</span>
         )}
-
-        {isOk && <span className="form__success">Success!</span>}
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
@@ -178,13 +168,9 @@ const EditTask = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Deadline</label>
 
-          <input
-            type="text"
+          <DateTimePicker
             value={deadline}
-            onChange={({ target: { value } }) => setDeadline(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
+            setValue={setDeadline}
             disabled={!isEditing}
           />
         </div>

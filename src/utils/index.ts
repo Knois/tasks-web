@@ -36,3 +36,9 @@ export const setTokenToStore = (token: string) => {
 export const deleteTokenFromStore = () => {
   localStorage.removeItem("token");
 };
+
+//получить начало диапазона годов для календаря
+export const getRangeStartYear = (year: number) => year - (year % 12) + 2;
+
+//получить конец диапазона годов для календаря
+export const getRangeEndYear = (year: number) => getRangeStartYear(year) + 11;

@@ -1,7 +1,7 @@
 import API from "api/api";
-import IconEdit from "components/shared/icons/IconEdit";
+import { ReactComponent as Edit } from "assets/svg/edit.svg";
+import { ReactComponent as Settings } from "assets/svg/settings.svg";
 import IconExpandHorizontal from "components/shared/icons/IconExpandHorizontal";
-import IconSettings from "components/shared/icons/IconSettings";
 import { useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
@@ -62,7 +62,7 @@ const Sidebar = () => {
                     to={`/${spaceId}/${group.id}/edit-group`}
                     className="sidebar__info__item__edit"
                   >
-                    <IconEdit />
+                    <Edit />
                   </Link>
                 </Link>
               ))}
@@ -83,7 +83,7 @@ const Sidebar = () => {
             to={`/${spaceId}/edit-space`}
             className="sidebar__tools__button"
           >
-            <IconSettings />
+            <Settings />
           </Link>
         )}
 

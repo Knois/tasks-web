@@ -56,6 +56,10 @@
     flex-direction: column;
     z-index: 2;
 
+    &-calendar {
+      max-width: min-content;
+    }
+
     &__list {
       display: flex;
       align-items: center;

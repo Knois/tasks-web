@@ -5,10 +5,13 @@ import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ISpace } from "types/Space";
 
 const CreateSpace = () => {
   const { userStore } = useStore();
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState<ISpace["name"]>("");
   const [description, setDescription] = useState<ISpace["description"]>("");
@@ -16,7 +19,6 @@ const CreateSpace = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isOk, setIsOk] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -35,7 +37,7 @@ const CreateSpace = () => {
     try {
       await API.createSpace(space);
       await userStore.getSpaces();
-      setIsOk(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -44,29 +46,10 @@ const CreateSpace = () => {
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setDescription("");
-    setMemberEmails([]);
-    setIsOk(false);
-    setIsError(false);
-  };
-
   if (isLoading) {
     return (
       <div className="screenbox screenbox-headed">
         <Loading />
-      </div>
-    );
-  }
-
-  if (isOk) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <span className="success">Success!</span>
-        <button onClick={resetForm} type="button" className="form__button">
-          Add another space
-        </button>
       </div>
     );
   }

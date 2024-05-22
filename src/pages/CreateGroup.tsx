@@ -2,18 +2,19 @@ import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
 import { memo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IGroup } from "types/Group";
 
 const CreateGroup = () => {
   const { spaceId } = useParams();
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState<IGroup["name"]>("");
   const [memberEmails, setMemberEmails] = useState<IGroup["memberEmails"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isOk, setIsOk] = useState<boolean>(false);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +30,7 @@ const CreateGroup = () => {
 
     try {
       await API.createGroup(group);
-      setIsOk(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -38,29 +39,10 @@ const CreateGroup = () => {
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setMemberEmails([]);
-    setIsOk(false);
-    setIsError(false);
-  };
-
   if (isLoading) {
     return (
       <div className="screenbox screenbox-headed">
         <Loading />
-      </div>
-    );
-  }
-
-  if (isOk) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <span className="success">Success!</span>
-
-        <button onClick={resetForm} type="button" className="form__button">
-          Add another group
-        </button>
       </div>
     );
   }

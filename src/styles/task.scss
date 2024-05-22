@@ -7,6 +7,16 @@
   padding: 10px 20px;
   border-radius: 10px;
   background: $color-white;
+  transition:
+    box-shadow 0.2s ease-in-out,
+    -webkit-box-shadow 0.2s ease-in-out,
+    -moz-box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 1px 1px 15px -1px $color-black-opacity;
+    -webkit-box-shadow: 1px 1px 15px -1px $color-black-opacity;
+    -moz-box-shadow: 1px 1px 15px -1px $color-black-opacity;
+  }
 
   &__name {
     color: $color-black;

@@ -1,17 +1,22 @@
 import API from "api/api";
 import Select from "components/select/Select";
+import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { memo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ITask, Level } from "types/Task";
 
 const CreateTask = () => {
   const { groupId } = useParams();
 
+  const navigate = useNavigate();
+
   const [name, setName] = useState<ITask["name"]>("");
   const [description, setDescription] = useState<ITask["description"]>("");
-  const [deadline, setDeadline] = useState<ITask["deadline"]>("");
+  const [deadline, setDeadline] = useState<ITask["deadline"]>(
+    new Date().toISOString(),
+  );
   const [hardLvl, setHardLvl] = useState<ITask["hardLvl"]>(Level.MEDIUM);
   const [priority, setPriority] = useState<ITask["priority"]>(Level.MEDIUM);
   const [responsibleEmail, setResponsibleEmail] =
@@ -19,7 +24,6 @@ const CreateTask = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isOk, setIsOk] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -45,7 +49,7 @@ const CreateTask = () => {
 
     try {
       await API.createTask(task);
-      setIsOk(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -54,33 +58,10 @@ const CreateTask = () => {
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setDescription("");
-    setDeadline("");
-    setHardLvl(Level.MEDIUM);
-    setPriority(Level.MEDIUM);
-    setResponsibleEmail("");
-    setIsOk(false);
-    setIsError(false);
-  };
-
   if (isLoading) {
     return (
       <div className="screenbox screenbox-headed">
         <Loading />
-      </div>
-    );
-  }
-
-  if (isOk) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <span className="success">Success!</span>
-
-        <button onClick={resetForm} type="button" className="form__button">
-          Add another task
-        </button>
       </div>
     );
   }
@@ -120,14 +101,7 @@ const CreateTask = () => {
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Deadline</label>
 
-          <input
-            type="text"
-            value={deadline}
-            onChange={({ target: { value } }) => setDeadline(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
-          />
+          <DateTimePicker value={deadline} setValue={setDeadline} />
         </div>
 
         <div className="form__box form__box-small">

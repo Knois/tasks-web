@@ -1,0 +1,165 @@
+.calendar {
+  padding: 10px;
+  width: 300px;
+
+  &__buttons {
+    margin-bottom: 10px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &__text {
+      color: $color-dark;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    &__arrows {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+    }
+
+    &__arrow {
+      cursor: pointer;
+
+      &-disabled {
+        pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    min-height: 265px;
+
+    &-months {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &-years {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__cell {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__day {
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 26px;
+    border-radius: 50%;
+    width: 1.875em;
+    height: 1.875em;
+    align-self: center;
+    justify-self: center;
+    color: #000;
+
+    &:hover {
+      background-color: rgb(179, 215, 254);
+    }
+
+    &-title {
+      font-size: 10px;
+      line-height: 17px;
+      cursor: initial;
+      background-color: initial !important;
+    }
+
+    &-nextMonth {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    &-prevMonth {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    &-selected {
+      background-color: rgb(0, 122, 255) !important;
+      color: #fff;
+    }
+
+    &-disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+  }
+
+  &__month {
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 32px;
+    border-radius: 32px;
+    height: 32px;
+    width: 72px;
+    align-self: center;
+    justify-self: center;
+
+    &:hover {
+      background-color: rgb(179, 215, 254);
+    }
+
+    &-selected {
+      background-color: rgb(0, 122, 255) !important;
+      color: #fff;
+    }
+
+    &-disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+  }
+
+  &__year {
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 32px;
+    border-radius: 32px;
+    height: 32px;
+    width: 72px;
+    align-self: center;
+    justify-self: center;
+
+    &:hover {
+      background-color: rgb(179, 215, 254);
+    }
+
+    &-selected {
+      background-color: rgb(0, 122, 255) !important;
+      color: #fff;
+    }
+
+    &-disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+  }
+}

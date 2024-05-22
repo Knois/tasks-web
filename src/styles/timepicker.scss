@@ -1,0 +1,128 @@
+.timepicker {
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+
+  &__scroller {
+    position: relative;
+    width: 100%;
+    background: $color-white;
+
+    &__wheel {
+      max-width: 100%;
+      overflow: hidden;
+      position: relative;
+      vertical-align: middle;
+      padding: 0 0.625em;
+
+      &__line {
+        height: 34px;
+        transform: translateY(-50%) translateZ(88px);
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 0.5em;
+        display: block;
+        margin: 0 0.625em;
+        z-index: 1;
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 50%;
+      }
+
+      &__group {
+        padding: 0.625em;
+        perspective: 100em;
+        justify-content: center;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+      }
+
+      &__overlay {
+        transform: translateZ(88px);
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        display: block;
+        background: linear-gradient(
+          $color-white,
+          hsla(0, 0%, 100%, 0) 52%,
+          hsla(0, 0%, 100%, 0) 0,
+          $color-white
+        );
+      }
+
+      &__options {
+        min-width: 55px;
+        transform-style: preserve-3d;
+        display: block;
+        max-width: 100%;
+        position: relative;
+        touch-action: none;
+      }
+
+      &__3d {
+        height: 188px;
+        box-sizing: content-box;
+        overflow: visible;
+        transform-style: preserve-3d;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        display: block;
+        margin: -1px 0;
+      }
+
+      &__items {
+        height: 34px;
+        transform: translateY(-50%) rotateX(0deg);
+        transition: transform 200ms ease-in-out;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform-style: preserve-3d;
+        box-sizing: border-box;
+        outline: none !important;
+      }
+
+      &__item {
+        height: 34px;
+        line-height: 34px;
+        text-align: right;
+        color: #888888;
+        font-size: 1.125em;
+        border-radius: 0.5em;
+        box-sizing: border-box;
+        padding: 0 0.5em;
+        backface-visibility: hidden;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: transform 200ms ease;
+        user-select: none;
+        background: $color-white;
+
+        &-canHover {
+          &:hover {
+            background: rgba(0, 122, 255, 0.15);
+          }
+        }
+
+        &-disabled {
+          opacity: 0.3;
+
+          &:hover {
+            background: $color-white !important;
+          }
+        }
+      }
+    }
+  }
+}

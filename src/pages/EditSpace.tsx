@@ -5,11 +5,13 @@ import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ISpace } from "types/Space";
 
 const EditSpace = () => {
   const { spaceId } = useParams();
+
+  const navigate = useNavigate();
 
   const { userStore } = useStore();
 
@@ -20,8 +22,6 @@ const EditSpace = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isOk, setIsOk] = useState<boolean>(false);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -35,7 +35,6 @@ const EditSpace = () => {
   const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
-    setIsOk(false);
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,7 +58,7 @@ const EditSpace = () => {
       const { data } = await API.updateSpace(space);
       setDataToState(data);
       await userStore.getSpaces();
-      setIsOk(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -82,7 +81,7 @@ const EditSpace = () => {
     try {
       await API.deleteSpace(spaceId);
       await userStore.getSpaces();
-      setIsDeleted(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
@@ -120,22 +119,12 @@ const EditSpace = () => {
     );
   }
 
-  if (isDeleted) {
-    return (
-      <div className="screenbox screenbox-headed">
-        <span className="form__success">Space deleted!</span>
-      </div>
-    );
-  }
-
   return (
     <div className="screenbox screenbox-headed">
       <form className="form" onSubmit={onSubmit}>
         {isError && (
           <span className="form__error">Error while changing space</span>
         )}
-
-        {isOk && <span className="form__success">Success!</span>}
 
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
