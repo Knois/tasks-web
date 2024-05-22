@@ -47,9 +47,9 @@
     top: calc(100% + 10px);
     left: 0;
     border-radius: 10px;
-    -webkit-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.45);
-    -moz-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.45);
-    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 28px 0 $color-black-opacity;
+    -webkit-box-shadow: 0 0 28px 0 $color-black-opacity;
+    -moz-box-shadow: 0 0 28px 0 $color-black-opacity;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -71,10 +71,10 @@
     height: 1.875em;
     align-self: center;
     justify-self: center;
-    color: #000;
+    color: $color-dark;
 
     &:hover {
-      background-color: rgb(179, 215, 254);
+      background-color: $color-bright;
     }
 
     &-title {
@@ -82,19 +82,20 @@
       line-height: 17px;
       cursor: initial;
       background-color: initial !important;
+      color: $color-dark;
     }
 
     &-nextMonth {
-      color: rgba(0, 0, 0, 0.5);
+      color: $color-black-opacity-hard;
     }
 
     &-prevMonth {
-      color: rgba(0, 0, 0, 0.5);
+      color: $color-black-opacity-hard;
     }
 
     &-selected {
-      background-color: rgb(0, 122, 255) !important;
-      color: #fff;
+      background-color: $color-dark !important;
+      color: $color-white;
     }
 
     &-disabled {
@@ -119,12 +120,12 @@
     justify-self: center;
 
     &:hover {
-      background-color: rgb(179, 215, 254);
+      background-color: $color-bright;
     }
 
     &-selected {
-      background-color: rgb(0, 122, 255) !important;
-      color: #fff;
+      background-color: $color-dark !important;
+      color: $color-white;
     }
 
     &-disabled {
@@ -149,12 +150,12 @@
     justify-self: center;
 
     &:hover {
-      background-color: rgb(179, 215, 254);
+      background-color: $color-bright;
     }
 
     &-selected {
-      background-color: rgb(0, 122, 255) !important;
-      color: #fff;
+      background-color: $color-dark !important;
+      color: $color-white;
     }
 
     &-disabled {

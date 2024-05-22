@@ -33,7 +33,9 @@ header {
   background: $color-dark;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px $color-black-opacity;
+  -webkit-box-shadow: 0 4px 6px $color-black-opacity;
+  -moz-box-shadow: 0 4px 6px $color-black-opacity;
   position: relative;
   z-index: 2;
 }
@@ -188,7 +190,7 @@ main {
 
 .add-space {
   color: $color-white;
-  background: $color-black;
+  background: $color-dark;
   border-radius: 10px;
   text-align: center;
   width: 150px;

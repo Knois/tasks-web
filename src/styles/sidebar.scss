@@ -3,7 +3,9 @@
   min-width: 300px;
   background: $color-dark;
   padding: 20px 10px;
-  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 0 6px $color-black-opacity;
+  -webkit-box-shadow: 4px 0 6px $color-black-opacity;
+  -moz-box-shadow: 4px 0 6px $color-black-opacity;
   position: relative;
   z-index: 1;
   display: flex;

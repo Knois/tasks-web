@@ -745,7 +745,7 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
           !isTouchingHours
             ? "timepicker__scroller__wheel__item-canHover"
             : ""
-        }`;
+        } ${(Math.round(item.rotateX / itemDegree) * itemDegree) % 360 === 0 ? "timepicker__scroller__wheel__item-selected" : ""}`;
 
         return (
           <div
@@ -754,10 +754,6 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
             className={className}
             style={{
               transform: `rotateX(${item.rotateX}deg) translateZ(85px)`,
-              color:
-                (Math.round(item.rotateX / itemDegree) * itemDegree) % 360 === 0
-                  ? "#000"
-                  : "#888888",
             }}
             onClick={handleItemClick}
           >
@@ -841,7 +837,7 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
           !isTouchingMinutes
             ? "timepicker__scroller__wheel__item-canHover"
             : ""
-        } `;
+        } ${(Math.round(item.rotateX / itemDegree) * itemDegree) % 360 === 0 ? "timepicker__scroller__wheel__item-selected" : ""}`;
 
         return (
           <div
@@ -850,10 +846,6 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
             className={className}
             style={{
               transform: `rotateX(${item.rotateX}deg) translateZ(85px)`,
-              color:
-                (Math.round(item.rotateX / itemDegree) * itemDegree) % 360 === 0
-                  ? "#000"
-                  : "#888888",
             }}
             onClick={handleItemClick}
           >

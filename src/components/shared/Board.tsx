@@ -26,6 +26,7 @@ const Board = () => {
         setTasks(data);
       } catch (error) {
         console.log(error);
+        setTasks([]);
       } finally {
         setIsLoading(false);
       }

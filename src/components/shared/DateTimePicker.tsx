@@ -25,7 +25,7 @@ const DateTimePicker: React.FC<Props> = ({ value, setValue, disabled }) => {
   });
 
   const date = new Date(value);
-  const label = `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  const label = `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 
   return (
     <div className="select">

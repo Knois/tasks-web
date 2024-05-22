@@ -18,7 +18,7 @@
       &__line {
         height: 34px;
         transform: translateY(-50%) translateZ(88px);
-        background: rgba(0, 0, 0, 0.1);
+        background: $color-dark;
         border-radius: 0.5em;
         display: block;
         margin: 0 0.625em;
@@ -28,6 +28,7 @@
         position: absolute;
         right: 0;
         top: 50%;
+        opacity: 0.2;
       }
 
       &__group {
@@ -94,7 +95,7 @@
         height: 34px;
         line-height: 34px;
         text-align: right;
-        color: #888888;
+        color: $color-black-opacity;
         font-size: 1.125em;
         border-radius: 0.5em;
         box-sizing: border-box;
@@ -107,20 +108,15 @@
         top: 0;
         transition: transform 200ms ease;
         user-select: none;
-        background: $color-white;
 
         &-canHover {
           &:hover {
-            background: rgba(0, 122, 255, 0.15);
+            background: $color-bright;
           }
         }
 
-        &-disabled {
-          opacity: 0.3;
-
-          &:hover {
-            background: $color-white !important;
-          }
+        &-selected {
+          color: $color-dark;
         }
       }
     }
