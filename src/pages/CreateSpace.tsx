@@ -19,7 +19,6 @@ const CreateSpace = () => {
   const [memberEmails, setMemberEmails] = useState<ISpace["memberEmails"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -27,7 +26,6 @@ const CreateSpace = () => {
     event.preventDefault();
 
     setIsLoading(true);
-    setIsError(false);
 
     const space = {
       name: name.trim(),
@@ -36,14 +34,12 @@ const CreateSpace = () => {
     };
 
     try {
-      await API.createSpace(space);
+      const { data } = await API.createSpace(space);
       await userStore.getSpaces();
       toast.success("Space created");
-      navigate(-1);
+      navigate(`/${data.id}`);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while creating space");
+      toast.error(`Error while creating space! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -55,10 +51,6 @@ const CreateSpace = () => {
 
   return (
     <form className="form" onSubmit={onSubmit}>
-      {isError && (
-        <span className="form__error">Error while creating space</span>
-      )}
-
       <div className="form__box form__box-small">
         <label className="form__label form__label-small">Name</label>
 

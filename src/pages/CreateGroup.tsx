@@ -20,7 +20,6 @@ const CreateGroup = () => {
   >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,7 +29,6 @@ const CreateGroup = () => {
     }
 
     setIsLoading(true);
-    setIsError(false);
 
     const group = { name, memberEmails, spaceId };
 
@@ -39,9 +37,7 @@ const CreateGroup = () => {
       toast.success("Group created");
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while creating group");
+      toast.error(`Error while creating group! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -75,10 +71,6 @@ const CreateGroup = () => {
 
   return (
     <form className="form" onSubmit={onSubmit}>
-      {isError && (
-        <span className="form__error">Error while creating group</span>
-      )}
-
       <div className="form__box form__box-small">
         <label className="form__label form__label-small">Name</label>
 

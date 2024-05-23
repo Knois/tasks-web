@@ -6,6 +6,7 @@ import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ISpace } from "types/Space";
 
 const Sidebar = () => {
@@ -25,7 +26,7 @@ const Sidebar = () => {
         const { data } = await API.getSpaceById(spaceId);
         setSpace(data);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error while getting space! ${error}`);
       }
     };
 

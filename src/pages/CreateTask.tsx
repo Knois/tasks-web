@@ -24,7 +24,6 @@ const CreateTask = () => {
     useState<ITask["responsibleEmail"]>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -36,7 +35,6 @@ const CreateTask = () => {
     }
 
     setIsLoading(true);
-    setIsError(false);
 
     const task = {
       name,
@@ -53,9 +51,7 @@ const CreateTask = () => {
       toast.success("Task created");
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while creating task");
+      toast.error(`Error while creating task! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -67,10 +63,6 @@ const CreateTask = () => {
 
   return (
     <form className="form" onSubmit={onSubmit}>
-      {isError && (
-        <span className="form__error">Error while creating task</span>
-      )}
-
       <div className="form__box form__box-small">
         <label className="form__label form__label-small">Name</label>
 

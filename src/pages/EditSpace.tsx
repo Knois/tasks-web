@@ -1,7 +1,7 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
-import { Modal } from "components/shared/Modal";
+import Modal from "components/shared/Modal";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useModal } from "hooks/useModal";
 import { useStore } from "hooks/useStore";
@@ -24,7 +24,6 @@ const EditSpace = () => {
   const [groups, setGroups] = useState<ISpace["groups"]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const textareaRef = useAutoResizeTextarea(description);
 
@@ -37,13 +36,8 @@ const EditSpace = () => {
     setGroups(data.groups);
   };
 
-  const setFormState = () => {
-    setIsLoading(true);
-    setIsError(false);
-  };
-
   const deleteSpace = async () => {
-    setFormState();
+    setIsLoading(true);
 
     if (!spaceId) {
       return;
@@ -53,11 +47,9 @@ const EditSpace = () => {
       await API.deleteSpace(spaceId);
       await userStore.getSpaces();
       toast.success("Space deleted");
-      navigate(-1);
+      navigate("/");
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while deleting space");
+      toast.error(`Error while deleting space! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +58,7 @@ const EditSpace = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setFormState();
+    setIsLoading(true);
 
     if (!spaceId) {
       return;
@@ -86,8 +78,7 @@ const EditSpace = () => {
       await userStore.getSpaces();
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
+      toast.error(`Error while updating space! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -130,10 +121,6 @@ const EditSpace = () => {
   return (
     <>
       <form className="form" onSubmit={onSubmit}>
-        {isError && (
-          <span className="form__error">Error while changing space</span>
-        )}
-
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
 

@@ -3,6 +3,7 @@ import Loading from "components/shared/Loading";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { setTokenToStore } from "utils";
 
 const Auth = () => {
@@ -28,7 +29,7 @@ const Auth = () => {
       setTokenToStore(jwt_token);
       await userStore.getUser();
     } catch (error) {
-      console.log(error);
+      toast.error(`Error while signing in! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -42,7 +43,7 @@ const Auth = () => {
         await processLogin();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(`Error while signing up! ${error}`);
       })
       .finally(() => setIsLoading(false));
   };

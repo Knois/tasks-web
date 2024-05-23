@@ -3,6 +3,7 @@ import Loading from "components/shared/Loading";
 import TasksList from "components/shared/TasksList";
 import { memo, useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ITask } from "types/Task";
 
 const Board = () => {
@@ -25,7 +26,7 @@ const Board = () => {
         const { data } = await API.getTasksByGroupId(groupId);
         setTasks(data);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error while getting tasks! ${error}`);
         setTasks([]);
       } finally {
         setIsLoading(false);

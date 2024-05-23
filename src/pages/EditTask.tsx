@@ -2,7 +2,7 @@ import API from "api/api";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
-import { Modal } from "components/shared/Modal";
+import Modal from "components/shared/Modal";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
@@ -28,7 +28,6 @@ const EditTask = () => {
   const [groupId, setGroupId] = useState<ITask["groupId"]>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -48,13 +47,8 @@ const EditTask = () => {
     setGroupId(data.groupId);
   };
 
-  const setFormState = () => {
-    setIsLoading(true);
-    setIsError(false);
-  };
-
   const deleteTask = async () => {
-    setFormState();
+    setIsLoading(true);
 
     if (!taskId) {
       return;
@@ -65,9 +59,7 @@ const EditTask = () => {
       toast.success("Task deleted");
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while deleting task");
+      toast.error(`Error while deleting task! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +68,7 @@ const EditTask = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setFormState();
+    setIsLoading(true);
 
     if (!taskId) {
       return;
@@ -98,8 +90,7 @@ const EditTask = () => {
       await API.updateTask(task, taskId);
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
+      toast.error(`Error while updating task! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -142,10 +133,6 @@ const EditTask = () => {
   return (
     <>
       <form className="form" onSubmit={onSubmit}>
-        {isError && (
-          <span className="form__error">Error while changing task</span>
-        )}
-
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
 

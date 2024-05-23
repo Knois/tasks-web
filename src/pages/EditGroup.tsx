@@ -1,7 +1,7 @@
 import API from "api/api";
 import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
-import { Modal } from "components/shared/Modal";
+import Modal from "components/shared/Modal";
 import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,7 +22,6 @@ const EditGroup = () => {
   >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const { isVisible, modalOptions, openModal, closeModal } = useModal();
 
@@ -31,13 +30,8 @@ const EditGroup = () => {
     setMemberEmails(data.memberEmails);
   };
 
-  const setFormState = () => {
-    setIsLoading(true);
-    setIsError(false);
-  };
-
   const deleteGroup = async () => {
-    setFormState();
+    setIsLoading(true);
 
     if (!groupId) {
       return;
@@ -48,9 +42,7 @@ const EditGroup = () => {
       toast.success("Group deleted");
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
-      toast.error("Error while deleting group");
+      toast.error(`Error while editing group! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +51,7 @@ const EditGroup = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setFormState();
+    setIsLoading(true);
 
     if (!groupId) {
       return;
@@ -75,8 +67,7 @@ const EditGroup = () => {
       setDataToState(data);
       navigate(-1);
     } catch (error) {
-      console.log(error);
-      setIsError(true);
+      toast.error(`Error while updating group! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -134,10 +125,6 @@ const EditGroup = () => {
   return (
     <>
       <form className="form" onSubmit={onSubmit}>
-        {isError && (
-          <span className="form__error">Error while changing group</span>
-        )}
-
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
 
