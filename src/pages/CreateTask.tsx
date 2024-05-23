@@ -3,9 +3,10 @@ import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
-import { memo, useState } from "react";
+import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IGroup } from "types/Group";
 import { ITask, Level } from "types/Task";
 
 const CreateTask = () => {
@@ -22,6 +23,10 @@ const CreateTask = () => {
   const [priority, setPriority] = useState<ITask["priority"]>(Level.MEDIUM);
   const [responsibleEmail, setResponsibleEmail] =
     useState<ITask["responsibleEmail"]>("");
+
+  const [availableMemberEmails, setAvailableMemberEmails] = useState<
+    IGroup["memberEmails"]
+  >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -56,6 +61,28 @@ const CreateTask = () => {
       setIsLoading(false);
     }
   };
+
+  useLayoutEffect(() => {
+    //get group info and set available member emails
+    const getGroup = async () => {
+      if (!groupId) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      try {
+        const { data } = await API.getGroupById(groupId);
+        setAvailableMemberEmails(data.memberEmails);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getGroup();
+  }, [groupId]);
 
   if (isLoading) {
     return <Loading />;
@@ -119,13 +146,10 @@ const CreateTask = () => {
           Responsible email
         </label>
 
-        <input
-          type="text"
+        <Select
           value={responsibleEmail}
-          onChange={({ target: { value } }) => setResponsibleEmail(value)}
-          required
-          className="form__input form__input-long"
-          maxLength={255}
+          options={availableMemberEmails}
+          setValue={setResponsibleEmail}
         />
       </div>
 

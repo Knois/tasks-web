@@ -8,6 +8,7 @@ import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IGroup } from "types/Group";
 import { ITask, Level, Status } from "types/Task";
 
 const EditTask = () => {
@@ -26,6 +27,9 @@ const EditTask = () => {
   const [responsibleEmail, setResponsibleEmail] =
     useState<ITask["responsibleEmail"]>("");
   const [groupId, setGroupId] = useState<ITask["groupId"]>("");
+  const [availableMemberEmails, setAvailableMemberEmails] = useState<
+    IGroup["memberEmails"]
+  >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -125,6 +129,28 @@ const EditTask = () => {
 
     getTask();
   }, [taskId]);
+
+  useLayoutEffect(() => {
+    //get group info and set available member emails
+    const getGroup = async () => {
+      if (!groupId) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      try {
+        const { data } = await API.getGroupById(groupId);
+        setAvailableMemberEmails(data.memberEmails);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getGroup();
+  }, [groupId]);
 
   if (isLoading) {
     return <Loading />;
@@ -230,13 +256,10 @@ const EditTask = () => {
             Responsible email
           </label>
 
-          <input
-            type="text"
+          <Select
             value={responsibleEmail}
-            onChange={({ target: { value } }) => setResponsibleEmail(value)}
-            required
-            className="form__input form__input-long"
-            maxLength={255}
+            options={availableMemberEmails}
+            setValue={setResponsibleEmail}
             disabled={!isEditing}
           />
         </div>
