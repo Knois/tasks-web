@@ -1,6 +1,8 @@
 import API from "api/api";
 import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
+import { Modal } from "components/shared/Modal";
+import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IGroup } from "types/Group";
@@ -21,6 +23,8 @@ const EditGroup = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
+  const { isVisible, modalOptions, openModal, closeModal } = useModal();
+
   const setDataToState = (data: IGroup) => {
     setName(data.name);
     setMemberEmails(data.memberEmails);
@@ -29,6 +33,24 @@ const EditGroup = () => {
   const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
+  };
+
+  const deleteGroup = async () => {
+    setFormState();
+
+    if (!groupId) {
+      return;
+    }
+
+    try {
+      await API.deleteGroup(groupId);
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -57,26 +79,13 @@ const EditGroup = () => {
     }
   };
 
-  const onDelete = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
-    setFormState();
-
-    if (!groupId) {
-      return;
-    }
-
-    try {
-      await API.deleteGroup(groupId);
-      navigate(-1);
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    openModal(`Are you sure you want to delete group "${name}"?`, () => {
+      deleteGroup();
+      closeModal();
+    });
   };
 
   useLayoutEffect(() => {
@@ -157,6 +166,14 @@ const EditGroup = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete group
       </button>
+
+      {isVisible && modalOptions && (
+        <Modal
+          text={modalOptions.text}
+          onOk={modalOptions.onOk}
+          onCancel={closeModal}
+        />
+      )}
     </>
   );
 };

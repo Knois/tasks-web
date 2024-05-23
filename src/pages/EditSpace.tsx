@@ -1,7 +1,9 @@
 import API from "api/api";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
+import { Modal } from "components/shared/Modal";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
+import { useModal } from "hooks/useModal";
 import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
@@ -25,6 +27,8 @@ const EditSpace = () => {
 
   const textareaRef = useAutoResizeTextarea(description);
 
+  const { isVisible, modalOptions, openModal, closeModal } = useModal();
+
   const setDataToState = (data: ISpace) => {
     setName(data.name);
     setDescription(data.description);
@@ -35,6 +39,25 @@ const EditSpace = () => {
   const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
+  };
+
+  const deleteSpace = async () => {
+    setFormState();
+
+    if (!spaceId) {
+      return;
+    }
+
+    try {
+      await API.deleteSpace(spaceId);
+      await userStore.getSpaces();
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -67,27 +90,13 @@ const EditSpace = () => {
     }
   };
 
-  const onDelete = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
-    setFormState();
-
-    if (!spaceId) {
-      return;
-    }
-
-    try {
-      await API.deleteSpace(spaceId);
-      await userStore.getSpaces();
-      navigate(-1);
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    openModal(`Are you sure you want to delete space "${name}"?`, () => {
+      deleteSpace();
+      closeModal();
+    });
   };
 
   useLayoutEffect(() => {
@@ -166,6 +175,14 @@ const EditSpace = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete space
       </button>
+
+      {isVisible && modalOptions && (
+        <Modal
+          text={modalOptions.text}
+          onOk={modalOptions.onOk}
+          onCancel={closeModal}
+        />
+      )}
     </>
   );
 };

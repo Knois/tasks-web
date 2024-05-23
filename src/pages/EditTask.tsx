@@ -2,7 +2,9 @@ import API from "api/api";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
+import { Modal } from "components/shared/Modal";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
+import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ITask, Level, Status } from "types/Task";
@@ -31,6 +33,8 @@ const EditTask = () => {
 
   const textareaRef = useAutoResizeTextarea(description);
 
+  const { isVisible, modalOptions, openModal, closeModal } = useModal();
+
   const setDataToState = (data: ITask) => {
     setName(data.name);
     setDescription(data.description);
@@ -46,6 +50,24 @@ const EditTask = () => {
   const setFormState = () => {
     setIsLoading(true);
     setIsError(false);
+  };
+
+  const deleteTask = async () => {
+    setFormState();
+
+    if (!taskId) {
+      return;
+    }
+
+    try {
+      await API.deleteTask(taskId);
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,26 +102,13 @@ const EditTask = () => {
     }
   };
 
-  const onDelete = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
-    setFormState();
-
-    if (!taskId) {
-      return;
-    }
-
-    try {
-      await API.deleteTask(taskId);
-      navigate(-1);
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    openModal(`Are you sure you want to delete task "${name}"?`, () => {
+      deleteTask();
+      closeModal();
+    });
   };
 
   useLayoutEffect(() => {
@@ -264,6 +273,14 @@ const EditTask = () => {
       <button type="button" className="form__button" onClick={onDelete}>
         Delete task
       </button>
+
+      {isVisible && modalOptions && (
+        <Modal
+          text={modalOptions.text}
+          onOk={modalOptions.onOk}
+          onCancel={closeModal}
+        />
+      )}
     </>
   );
 };
