@@ -5,6 +5,7 @@ import Loading from "components/shared/Loading";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { memo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ITask, Level } from "types/Task";
 
 const CreateTask = () => {
@@ -49,10 +50,12 @@ const CreateTask = () => {
 
     try {
       await API.createTask(task);
+      toast.success("Task created");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while creating task");
     } finally {
       setIsLoading(false);
     }

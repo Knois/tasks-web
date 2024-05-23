@@ -6,6 +6,7 @@ import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ISpace } from "types/Space";
 
 const CreateSpace = () => {
@@ -37,10 +38,12 @@ const CreateSpace = () => {
     try {
       await API.createSpace(space);
       await userStore.getSpaces();
+      toast.success("Space created");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while creating space");
     } finally {
       setIsLoading(false);
     }

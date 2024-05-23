@@ -8,6 +8,7 @@ import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ISpace } from "types/Space";
 
 const EditSpace = () => {
@@ -51,10 +52,12 @@ const EditSpace = () => {
     try {
       await API.deleteSpace(spaceId);
       await userStore.getSpaces();
+      toast.success("Space deleted");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while deleting space");
     } finally {
       setIsLoading(false);
     }

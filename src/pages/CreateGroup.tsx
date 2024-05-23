@@ -3,6 +3,7 @@ import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IGroup } from "types/Group";
 import { ISpace } from "types/Space";
 
@@ -35,10 +36,12 @@ const CreateGroup = () => {
 
     try {
       await API.createGroup(group);
+      toast.success("Group created");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while creating group");
     } finally {
       setIsLoading(false);
     }

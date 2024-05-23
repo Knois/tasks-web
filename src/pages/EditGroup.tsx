@@ -5,6 +5,7 @@ import { Modal } from "components/shared/Modal";
 import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IGroup } from "types/Group";
 import { ISpace } from "types/Space";
 
@@ -44,10 +45,12 @@ const EditGroup = () => {
 
     try {
       await API.deleteGroup(groupId);
+      toast.success("Group deleted");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while deleting group");
     } finally {
       setIsLoading(false);
     }

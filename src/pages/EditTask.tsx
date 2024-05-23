@@ -7,6 +7,7 @@ import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
 import { useModal } from "hooks/useModal";
 import { memo, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ITask, Level, Status } from "types/Task";
 
 const EditTask = () => {
@@ -61,10 +62,12 @@ const EditTask = () => {
 
     try {
       await API.deleteTask(taskId);
+      toast.success("Task deleted");
       navigate(-1);
     } catch (error) {
       console.log(error);
       setIsError(true);
+      toast.error("Error while deleting task");
     } finally {
       setIsLoading(false);
     }
