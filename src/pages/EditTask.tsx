@@ -63,7 +63,7 @@ const EditTask = () => {
       toast.success("Task deleted");
       navigate(-1);
     } catch (error) {
-      toast.error(`Error while deleting task! ${error}`);
+      toast.error(`Error deleting task! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -71,6 +71,11 @@ const EditTask = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!isEditing) {
+      setIsEditing(true);
+      return;
+    }
 
     setIsLoading(true);
 
@@ -92,9 +97,10 @@ const EditTask = () => {
 
     try {
       await API.updateTask(task, taskId);
+      toast.success(`The task was successfully updated!`);
       navigate(-1);
     } catch (error) {
-      toast.error(`Error while updating task! ${error}`);
+      toast.error(`Error updating task! ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +109,7 @@ const EditTask = () => {
   const onDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
-    openModal(`Are you sure you want to delete task "${name}"?`, () => {
+    openModal(`Are you sure you want to delete the task "${name}"?`, () => {
       deleteTask();
       closeModal();
     });
@@ -121,7 +127,7 @@ const EditTask = () => {
         const { data } = await API.getTaskById(taskId);
         setDataToState(data);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting task info! ${error}`);
       } finally {
         setIsLoading(false);
       }
@@ -143,7 +149,7 @@ const EditTask = () => {
         const { data } = await API.getGroupById(groupId);
         setAvailableMemberEmails(data.memberEmails);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting group members! ${error}`);
       } finally {
         setIsLoading(false);
       }
@@ -268,28 +274,14 @@ const EditTask = () => {
           />
         </div>
 
-        {isEditing && (
-          <button type="submit" className="form__button">
-            Update task
-          </button>
-        )}
-      </form>
-
-      {!isEditing && (
-        <button
-          type="button"
-          className="form__button"
-          onClick={() => {
-            setIsEditing(true);
-          }}
-        >
-          Edit task
+        <button type="submit" className="form__button">
+          {isEditing ? "Update task" : "Edit task"}
         </button>
-      )}
 
-      <button type="button" className="form__button" onClick={onDelete}>
-        Delete task
-      </button>
+        <button type="button" className="form__button" onClick={onDelete}>
+          Delete task
+        </button>
+      </form>
 
       {isVisible && modalOptions && (
         <Modal

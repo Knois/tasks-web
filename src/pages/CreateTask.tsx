@@ -17,7 +17,7 @@ const CreateTask = () => {
   const [name, setName] = useState<ITask["name"]>("");
   const [description, setDescription] = useState<ITask["description"]>("");
   const [deadline, setDeadline] = useState<ITask["deadline"]>(
-    new Date().toISOString(),
+    new Date(Date.now() + 864e5).toISOString(),
   );
   const [hardLvl, setHardLvl] = useState<ITask["hardLvl"]>(Level.MEDIUM);
   const [priority, setPriority] = useState<ITask["priority"]>(Level.MEDIUM);
@@ -75,7 +75,7 @@ const CreateTask = () => {
         const { data } = await API.getGroupById(groupId);
         setAvailableMemberEmails(data.memberEmails);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting group members! ${error}`);
       } finally {
         setIsLoading(false);
       }
