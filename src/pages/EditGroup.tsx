@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
 import Modal from "components/shared/Modal";
@@ -127,7 +128,9 @@ const EditGroup = () => {
   }
 
   return (
-    <>
+    <div className="board">
+      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
+
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
@@ -168,7 +171,7 @@ const EditGroup = () => {
           onCancel={closeModal}
         />
       )}
-    </>
+    </div>
   );
 };
 

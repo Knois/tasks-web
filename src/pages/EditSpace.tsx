@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
 import Modal from "components/shared/Modal";
@@ -123,7 +124,9 @@ const EditSpace = () => {
   }
 
   return (
-    <>
+    <div className="board">
+      <ButtonBack title="Back to spaces" to="/" />
+
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
@@ -177,7 +180,7 @@ const EditSpace = () => {
           onCancel={closeModal}
         />
       )}
-    </>
+    </div>
   );
 };
 

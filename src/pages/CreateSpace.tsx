@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import StringArrayInput from "components/input/StringArrayInput";
 import Loading from "components/shared/Loading";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
@@ -54,46 +55,50 @@ const CreateSpace = () => {
   }
 
   return (
-    <form className="form" onSubmit={onSubmit}>
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Name *</label>
+    <div className="board">
+      <ButtonBack title="Back to spaces" to="/" />
 
-        <input
-          type="text"
-          value={name}
-          onChange={({ target: { value } }) => setName(value)}
-          required
-          className="form__input form__input-long"
-          maxLength={255}
-        />
-      </div>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Name *</label>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Description</label>
+          <input
+            type="text"
+            value={name}
+            onChange={({ target: { value } }) => setName(value)}
+            required
+            className="form__input form__input-long"
+            maxLength={255}
+          />
+        </div>
 
-        <textarea
-          value={description}
-          onChange={({ target: { value } }) => setDescription(value)}
-          className="form__input form__input-long form__input-textarea"
-          maxLength={255}
-          ref={textareaRef}
-        />
-      </div>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Description</label>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Member Emails</label>
+          <textarea
+            value={description}
+            onChange={({ target: { value } }) => setDescription(value)}
+            className="form__input form__input-long form__input-textarea"
+            maxLength={255}
+            ref={textareaRef}
+          />
+        </div>
 
-        <StringArrayInput
-          array={memberEmails}
-          onChangeArray={setMemberEmails}
-          placeholder="Add member email"
-        />
-      </div>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Member Emails</label>
 
-      <button type="submit" className="form__button">
-        Create space
-      </button>
-    </form>
+          <StringArrayInput
+            array={memberEmails}
+            onChangeArray={setMemberEmails}
+            placeholder="Add member email"
+          />
+        </div>
+
+        <button type="submit" className="form__button">
+          Create space
+        </button>
+      </form>
+    </div>
   );
 };
 

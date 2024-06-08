@@ -1,20 +1,15 @@
 import { ReactComponent as Icon } from "assets/svg/arrow_back.svg";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-type Props = { title: string };
+import { Link } from "react-router-dom";
 
-const ButtonBack: React.FC<Props> = ({ title }) => {
-  const navigate = useNavigate();
+type Props = { title: string; to: string };
 
-  const handleClick = () => navigate(-1);
+const ButtonBack: React.FC<Props> = ({ title, to }) => (
+  <Link to={to} className="button button-back">
+    <Icon />
 
-  return (
-    <button onClick={handleClick} className="button button-back">
-      <Icon />
-
-      {title}
-    </button>
-  );
-};
+    {title}
+  </Link>
+);
 
 export default ButtonBack;

@@ -52,7 +52,7 @@ const Groups = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to spaces" />
+      <ButtonBack title="Back to spaces" to="/" />
 
       <span className="board__title">Groups</span>
 

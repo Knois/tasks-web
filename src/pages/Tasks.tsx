@@ -17,7 +17,7 @@ const ButtonCreateTask = () => (
 );
 
 const Tasks = () => {
-  const { groupId } = useParams();
+  const { spaceId, groupId } = useParams();
 
   const [tasks, setTasks] = useState<ITask[]>([]);
 
@@ -56,7 +56,7 @@ const Tasks = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to groups" />
+      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
 
       <div className="board__header">
         <span className="board__title">Tasks</span>

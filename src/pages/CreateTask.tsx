@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
@@ -10,7 +11,7 @@ import { IGroup } from "types/Group";
 import { ITask, Level } from "types/Task";
 
 const CreateTask = () => {
-  const { groupId } = useParams();
+  const { spaceId, groupId } = useParams();
 
   const navigate = useNavigate();
 
@@ -94,6 +95,8 @@ const CreateTask = () => {
 
   return (
     <div className="board">
+      <ButtonBack title="Back to tasks" to={`/${spaceId}/${groupId}`} />
+
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name *</label>

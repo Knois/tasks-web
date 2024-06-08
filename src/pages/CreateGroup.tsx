@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import SelectMulti from "components/select/SelectMulti";
 import Loading from "components/shared/Loading";
 import { memo, useLayoutEffect, useState } from "react";
@@ -74,34 +75,38 @@ const CreateGroup = () => {
   }
 
   return (
-    <form className="form" onSubmit={onSubmit}>
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Name *</label>
+    <div className="board">
+      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
 
-        <input
-          type="text"
-          value={name}
-          onChange={({ target: { value } }) => setName(value)}
-          required
-          className="form__input form__input-long"
-          maxLength={255}
-        />
-      </div>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Name *</label>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Member Emails</label>
+          <input
+            type="text"
+            value={name}
+            onChange={({ target: { value } }) => setName(value)}
+            required
+            className="form__input form__input-long"
+            maxLength={255}
+          />
+        </div>
 
-        <SelectMulti
-          values={memberEmails}
-          options={availableMemberEmails}
-          setValues={setMemberEmails}
-        />
-      </div>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Member Emails</label>
 
-      <button type="submit" className="form__button">
-        Create group
-      </button>
-    </form>
+          <SelectMulti
+            values={memberEmails}
+            options={availableMemberEmails}
+            setValues={setMemberEmails}
+          />
+        </div>
+
+        <button type="submit" className="form__button">
+          Create group
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -1,0 +1,15 @@
+.button {
+  &-back {
+    width: min-content;
+    text-wrap: nowrap;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+    color: $color-white;
+    font-size: 14px;
+  }
+}

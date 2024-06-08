@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
@@ -12,7 +13,7 @@ import { IGroup } from "types/Group";
 import { ITask, Level, Status } from "types/Task";
 
 const EditTask = () => {
-  const { taskId } = useParams();
+  const { spaceId, taskId } = useParams();
 
   const navigate = useNavigate();
 
@@ -167,7 +168,9 @@ const EditTask = () => {
   }
 
   return (
-    <>
+    <div className="board">
+      <ButtonBack title="Back to tasks" to={`/${spaceId}/${groupId}`} />
+
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
           <label className="form__label form__label-small">Name</label>
@@ -290,7 +293,7 @@ const EditTask = () => {
           onCancel={closeModal}
         />
       )}
-    </>
+    </div>
   );
 };
 
