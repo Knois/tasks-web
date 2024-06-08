@@ -66,13 +66,17 @@ const CreateGroup = () => {
   }, [spaceId]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="board board-loading">
+        <Loading />
+      </div>
+    );
   }
 
   return (
     <form className="form" onSubmit={onSubmit}>
       <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Name</label>
+        <label className="form__label form__label-small">Name *</label>
 
         <input
           type="text"

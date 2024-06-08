@@ -1,4 +1,4 @@
-.task {
+.card {
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -11,10 +11,15 @@
     box-shadow 0.2s ease-in-out,
     -webkit-box-shadow 0.2s ease-in-out,
     -moz-box-shadow 0.2s ease-in-out;
+  height: 150px;
 
-  &-completed {
+  &-add {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-done {
     text-decoration: line-through;
-    opacity: 0.5;
   }
 
   &:hover {
@@ -23,12 +28,32 @@
     -moz-box-shadow: 1px 1px 15px -1px $color-black-opacity;
   }
 
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  &__icon {
+    min-width: min-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__name {
     color: $color-black;
     font-size: 18px;
     text-wrap: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: bold;
+
+    &-nowrap {
+      text-wrap: nowrap;
+    }
   }
 
   &__description {

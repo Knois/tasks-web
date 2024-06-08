@@ -1,6 +1,6 @@
 import React from "react";
 
-type TimePickerProps = {
+type Props = {
   arrayHours: JSX.Element[];
   arrayMinutes: JSX.Element[];
   handleHoursScroll: (event: React.WheelEvent<HTMLDivElement>) => void;
@@ -15,7 +15,7 @@ type TimePickerProps = {
   handleMinutesTouchEnd: () => void;
 };
 
-const TimePicker: React.FC<TimePickerProps> = ({
+const TimePicker: React.FC<Props> = ({
   arrayHours,
   arrayMinutes,
   handleHoursScroll,

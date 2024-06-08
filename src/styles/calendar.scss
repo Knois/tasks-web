@@ -1,6 +1,15 @@
 .calendar {
-  padding: 10px;
-  width: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &__container {
+    padding: 10px;
+    width: 100%;
+    max-width: 230px;
+  }
 
   &__buttons {
     margin-bottom: 10px;
@@ -17,6 +26,7 @@
       font-weight: 400;
       font-size: 18px;
       line-height: 24px;
+      cursor: pointer;
     }
 
     &__arrows {

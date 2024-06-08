@@ -28,9 +28,9 @@ const DateTimePicker: React.FC<Props> = ({ value, setValue, disabled }) => {
   const label = `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 
   return (
-    <div className="select">
+    <div className="select select-long">
       <div
-        className={`select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
+        className={`select__root ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
         onClick={handleClick}
         ref={rootRef}
       >

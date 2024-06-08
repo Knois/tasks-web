@@ -1,6 +1,12 @@
 .select {
   position: relative;
 
+  &-long {
+    min-width: 300px;
+    width: 100%;
+    max-width: 410px;
+  }
+
   &__root {
     padding: 10px 15px;
     border-radius: 10px;
@@ -8,9 +14,12 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    width: 200px;
     justify-content: space-between;
     min-height: 44px;
+
+    &-header {
+      width: 200px;
+    }
 
     &-disabled {
       background-color: initial !important;
@@ -22,10 +31,6 @@
 
     &-open {
       background-color: $color-white-opacity;
-    }
-
-    &-long {
-      width: 410px;
     }
   }
 

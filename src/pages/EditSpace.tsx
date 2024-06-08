@@ -115,7 +115,11 @@ const EditSpace = () => {
   }, [spaceId]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="board board-loading">
+        <Loading />
+      </div>
+    );
   }
 
   return (

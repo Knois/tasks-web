@@ -24,9 +24,9 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
   });
 
   return (
-    <div className="select">
+    <div className="select select-long">
       <div
-        className={`select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
+        className={`select__root ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`}
         onClick={handleClick}
         ref={rootRef}
       >

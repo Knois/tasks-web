@@ -1362,15 +1362,8 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          margin: "auto",
-        }}
-      >
-        <div className="calendar">
+      <div className="calendar">
+        <div className="calendar__container">
           {isSelectingYear
             ? headerYear
             : isSelectingMonth
@@ -1384,22 +1377,20 @@ const Calendar: React.FC<Props> = ({ selectedDate, setSelectedDate }) => {
               : gridDays}
         </div>
 
-        <div>
-          <TimePicker
-            arrayHours={arrayHours}
-            arrayMinutes={arrayMinutes}
-            handleHoursScroll={handleHoursScroll}
-            handleMinutesScroll={handleMinutesScroll}
-            handleHoursKeyboard={handleHoursKeyboard}
-            handleMinutesKeyboard={handleMinutesKeyboard}
-            handleHoursTouchStart={handleHoursTouchStart}
-            handleMinutesTouchStart={handleMinutesTouchStart}
-            handleHoursTouchMove={handleHoursTouchMove}
-            handleMinutesTouchMove={handleMinutesTouchMove}
-            handleHoursTouchEnd={handleHoursTouchEnd}
-            handleMinutesTouchEnd={handleMinutesTouchEnd}
-          />
-        </div>
+        <TimePicker
+          arrayHours={arrayHours}
+          arrayMinutes={arrayMinutes}
+          handleHoursScroll={handleHoursScroll}
+          handleMinutesScroll={handleMinutesScroll}
+          handleHoursKeyboard={handleHoursKeyboard}
+          handleMinutesKeyboard={handleMinutesKeyboard}
+          handleHoursTouchStart={handleHoursTouchStart}
+          handleMinutesTouchStart={handleMinutesTouchStart}
+          handleHoursTouchMove={handleHoursTouchMove}
+          handleMinutesTouchMove={handleMinutesTouchMove}
+          handleHoursTouchEnd={handleHoursTouchEnd}
+          handleMinutesTouchEnd={handleMinutesTouchEnd}
+        />
       </div>
     </>
   );

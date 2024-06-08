@@ -1,4 +1,5 @@
 import API from "api/api";
+import ButtonBack from "components/buttons/ButtonBack";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
@@ -85,78 +86,88 @@ const CreateTask = () => {
   }, [groupId]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="board board-loading">
+        <Loading />
+      </div>
+    );
   }
 
   return (
-    <form className="form" onSubmit={onSubmit}>
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Name</label>
+    <div className="board">
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Name *</label>
 
-        <input
-          type="text"
-          value={name}
-          onChange={({ target: { value } }) => setName(value)}
-          required
-          className="form__input form__input-long"
-          maxLength={255}
-        />
-      </div>
+          <input
+            type="text"
+            value={name}
+            onChange={({ target: { value } }) => setName(value)}
+            required
+            className="form__input form__input-long"
+            maxLength={255}
+          />
+        </div>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Description</label>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Description</label>
 
-        <textarea
-          value={description}
-          onChange={({ target: { value } }) => setDescription(value)}
-          className="form__input form__input-long form__input-textarea"
-          maxLength={255}
-          ref={textareaRef}
-        />
-      </div>
+          <textarea
+            value={description}
+            onChange={({ target: { value } }) => setDescription(value)}
+            className="form__input form__input-long form__input-textarea"
+            maxLength={255}
+            ref={textareaRef}
+          />
+        </div>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Deadline</label>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Deadline</label>
 
-        <DateTimePicker value={deadline} setValue={setDeadline} />
-      </div>
+          <DateTimePicker value={deadline} setValue={setDeadline} />
+        </div>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Hard level</label>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Hard level</label>
 
-        <Select
-          value={hardLvl}
-          options={Object.values(Level)}
-          setValue={setHardLvl as React.Dispatch<React.SetStateAction<string>>}
-        />
-      </div>
+          <Select
+            value={hardLvl}
+            options={Object.values(Level)}
+            setValue={
+              setHardLvl as React.Dispatch<React.SetStateAction<string>>
+            }
+          />
+        </div>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">Priority</label>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">Priority</label>
 
-        <Select
-          value={priority}
-          options={Object.values(Level)}
-          setValue={setPriority as React.Dispatch<React.SetStateAction<string>>}
-        />
-      </div>
+          <Select
+            value={priority}
+            options={Object.values(Level)}
+            setValue={
+              setPriority as React.Dispatch<React.SetStateAction<string>>
+            }
+          />
+        </div>
 
-      <div className="form__box form__box-small">
-        <label className="form__label form__label-small">
-          Responsible email
-        </label>
+        <div className="form__box form__box-small">
+          <label className="form__label form__label-small">
+            Responsible email *
+          </label>
 
-        <Select
-          value={responsibleEmail}
-          options={availableMemberEmails}
-          setValue={setResponsibleEmail}
-        />
-      </div>
+          <Select
+            value={responsibleEmail}
+            options={availableMemberEmails}
+            setValue={setResponsibleEmail}
+          />
+        </div>
 
-      <button type="submit" className="form__button">
-        Create task
-      </button>
-    </form>
+        <button type="submit" className="form__button">
+          Create task
+        </button>
+      </form>
+    </div>
   );
 };
 

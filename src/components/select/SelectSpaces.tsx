@@ -7,18 +7,13 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SelectSpaces = () => {
-  const { userStore, appStore } = useStore();
+  const { userStore } = useStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const handleClick = () => setIsOpen((s) => !s);
 
-  const handleSelect = () => {
-    appStore.setIsExpandedSidebar(true);
-    setIsOpen(false);
-  };
+  const handleSelect = () => setIsOpen(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -29,11 +24,7 @@ const SelectSpaces = () => {
 
   useLayoutEffect(() => {
     const getSpaces = async () => {
-      setIsLoading(true);
-
       await userStore.getSpaces();
-
-      setIsLoading(false);
     };
 
     getSpaces();
@@ -42,7 +33,7 @@ const SelectSpaces = () => {
   return (
     <div className="select">
       <div
-        className={`select__root ${isOpen ? "select__root-open" : ""}`}
+        className={`select__root select__root-header ${isOpen ? "select__root-open" : ""}`}
         onClick={handleClick}
         ref={rootRef}
       >
@@ -53,7 +44,7 @@ const SelectSpaces = () => {
 
       {isOpen && (
         <div className="select__dropdown" ref={dropdownRef}>
-          {isLoading ? (
+          {userStore.isLoadingSpaces ? (
             <Loading />
           ) : (
             <>

@@ -1,12 +1,12 @@
-import React, { memo } from "react";
+import React from "react";
 
-type ModalProps = {
+type Props = {
   text: string;
   onOk: () => void;
   onCancel: () => void;
 };
 
-const Modal: React.FC<ModalProps> = ({ text, onOk, onCancel }) => {
+const Modal: React.FC<Props> = ({ text, onOk, onCancel }) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -29,4 +29,4 @@ const Modal: React.FC<ModalProps> = ({ text, onOk, onCancel }) => {
   );
 };
 
-export default memo(Modal);
+export default React.memo(Modal);

@@ -33,10 +33,10 @@ const SelectMulti: React.FC<Props> = ({
     ? `${values.length} ${values.length === 1 ? "member" : "members"}`
     : "Select members";
 
-  const rootClassName = `select__root select__root-long ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`;
+  const rootClassName = `select__root ${isOpen ? "select__root-open" : ""} ${disabled ? "select__root-disabled" : ""}`;
 
   return (
-    <div className="select">
+    <div className="select select-long">
       <div className={rootClassName} onClick={handleClick} ref={rootRef}>
         <span className="select__label">{label}</span>
 
