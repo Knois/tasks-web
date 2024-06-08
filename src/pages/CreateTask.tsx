@@ -1,5 +1,4 @@
 import API from "api/api";
-import ButtonBack from "components/buttons/ButtonBack";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
 import Loading from "components/shared/Loading";
@@ -116,7 +115,7 @@ const CreateTask = () => {
             value={description}
             onChange={({ target: { value } }) => setDescription(value)}
             className="form__input form__input-long form__input-textarea"
-            maxLength={255}
+            maxLength={9999999}
             ref={textareaRef}
           />
         </div>

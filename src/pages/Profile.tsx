@@ -19,16 +19,10 @@ const Profile = () => {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-        <div>
-          <span>Email: </span>
-          <span>{userStore.email}</span>
-        </div>
+      <div className="board">
+        <span className="board__title">Email: {userStore.email}</span>
 
-        <div>
-          <span>Name: </span>
-          <span>{userStore.name}</span>
-        </div>
+        <span className="board__title">Name: {userStore.name}</span>
 
         <button
           onClick={handleClick}
