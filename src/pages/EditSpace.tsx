@@ -106,7 +106,7 @@ const EditSpace = () => {
         const { data } = await API.getSpaceById(spaceId);
         setDataToState(data);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting space info! ${error}`);
       } finally {
         setIsLoading(false);
       }
@@ -125,7 +125,7 @@ const EditSpace = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to spaces" to="/" />
+      <ButtonBack title="Back to space" to={`/${spaceId}`} />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
@@ -167,11 +167,15 @@ const EditSpace = () => {
         <button type="submit" className="form__button">
           Update space
         </button>
-      </form>
 
-      <button type="button" className="form__button" onClick={onDelete}>
-        Delete space
-      </button>
+        <button
+          type="button"
+          className="form__button form__button-delete"
+          onClick={onDelete}
+        >
+          Delete space
+        </button>
+      </form>
 
       {isVisible && modalOptions && (
         <Modal

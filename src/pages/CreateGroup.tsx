@@ -57,7 +57,7 @@ const CreateGroup = () => {
         const { data } = await API.getSpaceById(spaceId);
         setAvailableMemberEmails(data.memberEmails);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting space members! ${error}`);
       } finally {
         setIsLoading(false);
       }
@@ -76,7 +76,7 @@ const CreateGroup = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
+      <ButtonBack title="Back to space" to={`/${spaceId}`} />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">

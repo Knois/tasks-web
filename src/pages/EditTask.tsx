@@ -169,7 +169,7 @@ const EditTask = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to tasks" to={`/${spaceId}/${groupId}`} />
+      <ButtonBack title="Back to tasks list" to={`/${spaceId}/${groupId}`} />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
@@ -281,7 +281,11 @@ const EditTask = () => {
           {isEditing ? "Update task" : "Edit task"}
         </button>
 
-        <button type="button" className="form__button" onClick={onDelete}>
+        <button
+          type="button"
+          className="form__button form__button-delete"
+          onClick={onDelete}
+        >
           Delete task
         </button>
       </form>

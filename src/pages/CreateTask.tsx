@@ -95,7 +95,7 @@ const CreateTask = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to tasks" to={`/${spaceId}/${groupId}`} />
+      <ButtonBack title="Back to group" to={`/${spaceId}/${groupId}`} />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">

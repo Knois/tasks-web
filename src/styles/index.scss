@@ -142,6 +142,11 @@ body {
         outline: $color-white solid 2px;
       }
     }
+
+    &-delete {
+      background-color: $color-error;
+      color: $color-white;
+    }
   }
 
   &__item {

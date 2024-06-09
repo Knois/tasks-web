@@ -56,7 +56,7 @@ const CreateSpace = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to spaces" to="/" />
+      <ButtonBack title="Back to spaces list" to="/" />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">

@@ -3,14 +3,24 @@ import ButtonBack from "components/buttons/ButtonBack";
 import CardAddNew from "components/cards/CardAddNew";
 import CardGroup from "components/cards/CardGroup";
 import Loading from "components/shared/Loading";
+import { useStore } from "hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ISpace } from "types/Space";
 
+const ButtonEditSpace = () => (
+  <Link to="edit-space">
+    <button type="button" className="form__button form__button-small">
+      Edit space
+    </button>
+  </Link>
+);
+
 const Groups = () => {
   const { spaceId } = useParams();
+  const { userStore } = useStore();
 
   const [space, setSpace] = useState<ISpace | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,15 +62,23 @@ const Groups = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to spaces" to="/" />
+      <ButtonBack title="Back to spaces list" to="/" />
 
-      <span className="board__title">Groups</span>
+      <span className="board__title">{space?.name}</span>
+
+      <div className="board__row">
+        <span className="board__title">Groups</span>
+
+        {space?.creatorEmail === userStore.email && <ButtonEditSpace />}
+      </div>
 
       <div className="board__list">
         {groups}
 
         <CardAddNew to="create-group" />
       </div>
+
+      <span className="board__description">{space?.description}</span>
     </div>
   );
 };

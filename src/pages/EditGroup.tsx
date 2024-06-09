@@ -41,7 +41,7 @@ const EditGroup = () => {
     try {
       await API.deleteGroup(groupId);
       toast.success("Group deleted");
-      navigate(-1);
+      navigate(`/${spaceId}`);
     } catch (error) {
       toast.error(`Error while editing group! ${error}`);
     } finally {
@@ -94,7 +94,7 @@ const EditGroup = () => {
         const { data } = await API.getSpaceById(spaceId);
         setAvailableMemberEmails(data.memberEmails);
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting space members! ${error}`);
       }
     };
 
@@ -110,7 +110,7 @@ const EditGroup = () => {
         setDataToState(data);
         await getSpace();
       } catch (error) {
-        console.log(error);
+        toast.error(`Error getting group info! ${error}`);
       } finally {
         setIsLoading(false);
       }
@@ -129,7 +129,7 @@ const EditGroup = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
+      <ButtonBack title="Back to group" to={`/${spaceId}/${groupId}`} />
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__box form__box-small">
@@ -158,11 +158,15 @@ const EditGroup = () => {
         <button type="submit" className="form__button">
           Update group
         </button>
-      </form>
 
-      <button type="button" className="form__button" onClick={onDelete}>
-        Delete group
-      </button>
+        <button
+          type="button"
+          className="form__button form__button-delete"
+          onClick={onDelete}
+        >
+          Delete group
+        </button>
+      </form>
 
       {isVisible && modalOptions && (
         <Modal

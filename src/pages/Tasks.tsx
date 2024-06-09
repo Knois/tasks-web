@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IGroup } from "types/Group";
 import { ITask } from "types/Task";
 
 const ButtonCreateTask = () => (
@@ -16,10 +17,19 @@ const ButtonCreateTask = () => (
   </Link>
 );
 
+const ButtonEditGroup = () => (
+  <Link to="edit-group">
+    <button type="button" className="form__button form__button-small">
+      Edit group
+    </button>
+  </Link>
+);
+
 const Tasks = () => {
   const { spaceId, groupId } = useParams();
 
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const [group, setGroup] = useState<IGroup | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,6 +41,14 @@ const Tasks = () => {
       }
 
       setIsLoading(true);
+
+      try {
+        const { data } = await API.getGroupById(groupId);
+        setGroup(data);
+      } catch (error) {
+        toast.error(`Error while getting group info! ${error}`);
+        setGroup(null);
+      }
 
       try {
         const { data } = await API.getTasksByGroupId(groupId);
@@ -56,10 +74,14 @@ const Tasks = () => {
 
   return (
     <div className="board">
-      <ButtonBack title="Back to groups" to={`/${spaceId}`} />
+      <ButtonBack title="Back to groups list" to={`/${spaceId}`} />
 
-      <div className="board__header">
+      <span className="board__title">{group?.name}</span>
+
+      <div className="board__row">
         <span className="board__title">Tasks</span>
+
+        <ButtonEditGroup />
 
         <ButtonCreateTask />
       </div>
