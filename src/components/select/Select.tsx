@@ -7,9 +7,16 @@ type Props = {
   options: string[];
   setValue: React.Dispatch<React.SetStateAction<string>>;
   disabled?: boolean;
+  icon?: React.ReactNode;
 };
 
-const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
+const Select: React.FC<Props> = ({
+  value,
+  options,
+  setValue,
+  disabled,
+  icon,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -30,7 +37,11 @@ const Select: React.FC<Props> = ({ value, options, setValue, disabled }) => {
         onClick={handleClick}
         ref={rootRef}
       >
-        <span className="select__label">{value}</span>
+        <div className="select__value">
+          {icon}
+
+          <span className="select__label">{value}</span>
+        </div>
 
         {!disabled && <IconExpandVertical isOpen={isOpen} />}
       </div>

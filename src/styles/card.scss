@@ -13,6 +13,10 @@
     -moz-box-shadow 0.2s ease-in-out;
   height: 150px;
 
+  &-task {
+    height: 180px;
+  }
+
   &-add {
     justify-content: center;
     align-items: center;
@@ -29,11 +33,29 @@
     -moz-box-shadow: 1px 1px 15px -1px $color-black-opacity;
   }
 
-  &__header {
+  &__row {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 5px;
+
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
+    }
+
+    &-level {
+      margin-top: -2px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
     gap: 5px;
   }
 
@@ -63,5 +85,9 @@
     text-wrap: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &-level {
+      margin-top: 8px;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import IconExpandVertical from "components/shared/icons/IconExpandVertical";
 import { useClickOutside } from "hooks/useClickOutside";
 import React, { memo, useRef, useState } from "react";
+import { getFormattedDate } from "utils";
 
 import Calendar from "./Calendar";
 
@@ -25,7 +26,7 @@ const DateTimePicker: React.FC<Props> = ({ value, setValue, disabled }) => {
   });
 
   const date = new Date(value);
-  const label = `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+  const label = getFormattedDate(date);
 
   return (
     <div className="select select-long">

@@ -2,6 +2,8 @@ import API from "api/api";
 import ButtonBack from "components/buttons/ButtonBack";
 import Select from "components/select/Select";
 import DateTimePicker from "components/shared/DateTimePicker";
+import IconTaskLevel from "components/shared/icons/IconTaskLevel";
+import IconTaskStatus from "components/shared/icons/IconTaskStatus";
 import Loading from "components/shared/Loading";
 import Modal from "components/shared/Modal";
 import useAutoResizeTextarea from "hooks/useAutoResizeTextarea";
@@ -219,6 +221,7 @@ const EditTask = () => {
               setHardLvl as React.Dispatch<React.SetStateAction<string>>
             }
             disabled={!isEditing}
+            icon={<IconTaskLevel level={hardLvl} />}
           />
         </div>
 
@@ -232,6 +235,7 @@ const EditTask = () => {
               setPriority as React.Dispatch<React.SetStateAction<string>>
             }
             disabled={!isEditing}
+            icon={<IconTaskLevel level={priority} />}
           />
         </div>
 
@@ -243,6 +247,7 @@ const EditTask = () => {
             options={Object.values(Status)}
             setValue={setStatus as React.Dispatch<React.SetStateAction<string>>}
             disabled={!isEditing}
+            icon={<IconTaskStatus status={status} />}
           />
         </div>
 

@@ -42,3 +42,7 @@ export const getRangeStartYear = (year: number) => year - (year % 12) + 2;
 
 //получить конец диапазона годов для календаря
 export const getRangeEndYear = (year: number) => getRangeStartYear(year) + 11;
+
+export const getFormattedDate = (date: Date) => {
+  return `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+};
