@@ -195,8 +195,8 @@ const EditTask = () => {
             value={description}
             onChange={({ target: { value } }) => setDescription(value)}
             className="form__input form__input-long form__input-textarea"
-            maxLength={255}
             ref={textareaRef}
+            maxLength={9999999}
             disabled={!isEditing}
           />
         </div>
